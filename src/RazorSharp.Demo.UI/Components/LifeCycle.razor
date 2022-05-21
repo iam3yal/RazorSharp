@@ -1,0 +1,90 @@
+@inherits ComponentBase
+@using System.Collections
+@implements IEnumerable<string>
+
+@AddBuildRenderTreeMessage()
+
+@foreach (var message in _messages)
+{
+    <p>@message</p>
+}
+
+<button @onclick="RerenderViewHandler">Rerender View</button>
+
+@code {
+
+    private readonly IList<string> _messages = new List<string>();
+
+    private bool _isFirstRender = true;
+
+    public IEnumerator<string> GetEnumerator()
+        => _messages.GetEnumerator();
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        _messages.Add(nameof(SetParametersAsync));
+
+        await base.SetParametersAsync(parameters);
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+        => GetEnumerator();
+
+    protected override void OnAfterRender(bool firstRender)
+        => _messages.Add(firstRender ? $"{nameof(OnAfterRender)} - firstRender" : $"{nameof(OnAfterRender)}");
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _messages.Add($"{nameof(OnAfterRenderAsync)} - firstRender");
+
+            await InvokeAsync(StateHasChanged);
+        }
+        else
+        {
+            _messages.Add(nameof(OnAfterRenderAsync));
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    protected override void OnInitialized()
+        => _messages.Add(nameof(OnInitialized));
+
+    protected override async Task OnInitializedAsync()
+    {
+        _messages.Add(nameof(OnInitializedAsync));
+
+        await base.OnInitializedAsync();
+    }
+
+    protected override void OnParametersSet()
+        => _messages.Add(nameof(OnParametersSet));
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _messages.Add(nameof(OnParametersSetAsync));
+
+        await base.OnParametersSetAsync();
+    }
+
+    private MarkupString AddBuildRenderTreeMessage()
+    {
+        if (_isFirstRender)
+        {
+            _messages.Add($"{nameof(BuildRenderTree)} - firstRender");
+
+            _isFirstRender = false;
+        }
+        else
+        {
+            _messages.Add(nameof(BuildRenderTree));
+        }
+
+        return (MarkupString) "";
+    }
+
+    private async Task RerenderViewHandler()
+        => await InvokeAsync(StateHasChanged);
+}

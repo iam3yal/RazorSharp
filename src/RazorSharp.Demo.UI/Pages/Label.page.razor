@@ -1,0 +1,40 @@
+@page "/Label"
+@using RazorSharp.Components.Forms
+@using RazorSharp.Components.Labels
+
+<PageTitle>Label</PageTitle>
+
+<Label>
+    <input type="checkbox" /> Label with nested element
+</Label>
+
+<br />
+
+<input id="labaled-element-checkbox" type="checkbox" />
+
+<Label Target="@("labaled-element-checkbox")">
+    Label with associated element
+</Label>
+
+<br />
+
+<CheckBox @ref="_checkBox" Id="labaled-component-checkbox" />
+
+<Label Target="_checkBox">
+    Label with associated component
+</Label>
+
+@code
+{
+    private CheckBox? _checkBox;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}

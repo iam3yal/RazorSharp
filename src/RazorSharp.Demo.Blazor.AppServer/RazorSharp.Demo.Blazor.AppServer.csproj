@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Configurations>Debug;Release;Benchmarks</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <LangVersion>default</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+    <ItemGroup>
+        <ProjectReference Include="..\RazorSharp.Demo.UI\RazorSharp.Demo.UI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <_ContentIncludedByDefault Remove="Interop\Container.cshtml" />
+    </ItemGroup>
+
+</Project>

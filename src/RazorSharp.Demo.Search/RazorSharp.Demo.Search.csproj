@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RazorSharp.Core\RazorSharp.Core.csproj" />
+      <ProjectReference Include="..\RazorSharp.Demo.Data.Converters\RazorSharp.Demo.Data.Converters.csproj" />
+    </ItemGroup>
+
+</Project>

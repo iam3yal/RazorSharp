@@ -1,0 +1,10 @@
+@inherits WebComponent
+
+@typeparam TItem
+@attribute [CascadingTypeParameter(nameof(TItem))]
+
+<CascadingValue Name="RazorGrid" Value="@(this)" IsFixed="true">
+    <table>
+        @ChildContent
+    </table>
+</CascadingValue>

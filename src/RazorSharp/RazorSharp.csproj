@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <PackageVersion>1.0.0-alpha.1</PackageVersion>
+        <Authors>Eyal Alon</Authors>
+        <Company>Eyal Alon</Company>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+        <PackageId>RazorSharp.Components</PackageId>
+        <AssemblyName>RazorSharp.Components</AssemblyName>
+        <LangVersion>default</LangVersion>
+        <RunPostBuildEvent>Always</RunPostBuildEvent>
+        <Configurations>Debug;Release;Benchmarks</Configurations>
+        <Platforms>AnyCPU</Platforms>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PackageOutputPath>$(HOME)/Development/.nuget</PackageOutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\RazorSharp.Dom\RazorSharp.Dom.csproj" />
+        <ProjectReference Include="..\RazorSharp.Core.Components\RazorSharp.Core.Components.csproj" />
+        <ProjectReference Include="..\RazorSharp.Core\RazorSharp.Core.csproj" />
+        <ProjectReference Include="..\RazorSharp.JSInterop.Wrappers\RazorSharp.JSInterop.Wrappers.csproj" />
+        <ProjectReference Include="..\RazorSharp.JSInterop\RazorSharp.JSInterop.csproj" />
+        <ProjectReference Include="..\RazorSharp.Framework\RazorSharp.Framework.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+    </PropertyGroup>
+
+    <Target Name="CopyJSFiles" BeforeTargets="BeforeBuild">
+        <Message Text="RazorSharp.JSInterop.Scripts: Start copying JavaScript files." Importance="High" />
+
+        <PropertyGroup>
+            <DestinationDir>$(ProjectDir)wwwroot/</DestinationDir>
+        </PropertyGroup>
+
+        <ItemGroup>
+            <SourceJSFiles Include="$(SolutionDir)$(ProjectName).JSInterop.Scripts/wwwroot/*.*js" />
+            <DestinationJSFiles Include="$(DestinationDir)*.*js" />
+        </ItemGroup>
+
+        <Delete Files="@(DestinationJSFiles)" />
+        <Copy SourceFiles="@(SourceJSFiles)" DestinationFolder="$(DestinationDir)" />
+
+        <Message Text="RazorSharp.JSInterop.Scripts: Finished copying JavaScript files." Importance="High" />
+    </Target>
+</Project>

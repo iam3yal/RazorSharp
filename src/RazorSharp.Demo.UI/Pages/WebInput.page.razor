@@ -1,0 +1,25 @@
+@page "/WebInput"
+@using RazorSharp.Components.Forms
+@using RazorSharp.Components.Buttons
+
+<PageTitle>WebInput</PageTitle>
+
+<WebInput TValue="string" @ref="_input" Value="@("Lorem ipsum dolor sit amet.")" />
+
+<br />
+
+<Button OnClick="@ClearHandler">Clear</Button>
+
+<Button OnClick="@ResetHandler">Reset</Button>
+
+@code {
+
+    private WebInput<string> _input = null!;
+
+    private async Task ClearHandler()
+        => await _input.ClearAsync();
+
+    private async Task ResetHandler()
+        => await _input.ResetAsync();
+
+}

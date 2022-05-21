@@ -1,0 +1,31 @@
+@page "/Interop/HtmlElement/Focus"
+@using RazorSharp.JSInterop
+@using RazorSharp.JSInterop.Wrappers
+@using System.Diagnostics.CodeAnalysis
+@inject IJSRuntime JSRuntime
+
+<input @ref="Ref"
+       type="text"
+       style="width: 5rem"
+       data-testid="Input" />
+
+<button @onclick="async () => await HtmlElement.FocusAsync()" data-testid="Focus">Set Focus</button>
+<button @onclick="async () => await HtmlElement.BlurAsync()" data-testid="Blur">Remove Focus</button>
+
+@code {
+
+    [NotNull]
+    protected HtmlElement? HtmlElement { get; private set; }
+
+    [Parameter]
+    public ElementReference Ref { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            HtmlElement = await JSRuntime.CreateModuleAsyncAs<HtmlElement>(Ref);
+        }
+    }
+
+}

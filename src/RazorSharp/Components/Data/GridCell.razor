@@ -1,0 +1,93 @@
+@inherits GridComponentBase<TItem>
+@using RazorSharp.Components.Forms
+@typeparam TItem
+
+<CascadingValue Name="Cell" Value="@(this)" IsFixed="true">
+    <td>
+        @if (Context is not null && CascadingContext.Row is { EditState: GridEditState.Write })
+        {
+            switch (Context.OriginalContent)
+            {
+                case string s:
+                {
+                    <WebInput TValue="string" Value="s" OnInput="@OnChangeHandlerAsync" />
+                    break;
+                }
+                case int @int:
+                {
+                    <WebInput TValue="int" Value="@(@int)" OnInput="@OnChangeHandlerAsync" />
+                    break;
+                }
+                case bool @bool:
+                {
+                    <input type="checkbox" checked="@(@bool)" @onchange="OnChangeHandlerAsync" />
+                    break;
+                }
+                case float @float:
+                {
+                    break;
+                }
+                case double @double:
+                {
+                    break;
+                }
+                case char @char:
+                {
+                    break;
+                }
+                case byte @byte:
+                {
+                    break;
+                }
+                case long @long:
+                {
+                    break;
+                }
+                case short @short:
+                {
+                    break;
+                }
+                case Enum e when e.GetType().GetEnumUnderlyingType() is var enumType:
+                {
+                    if (enumType == typeof(int))
+                    {
+                    }
+                    else if (enumType == typeof(short))
+                    {
+                    }
+                    else if (enumType == typeof(byte))
+                    {
+                    }
+                    else if (enumType == typeof(long))
+                    {
+                    }
+                    break;
+                }
+                default:
+                {
+                    @ChildContent
+
+                    break;
+                }
+            }
+        }
+        else
+        {
+            @ChildContent
+        }
+    </td>
+</CascadingValue>
+
+@code {
+
+    private void OnChangeHandlerAsync(ChangeEventArgs e)
+    {
+        if (CascadingContext.Row is { } row && Context is { } context)
+        {
+            context.CurrentContent = e.Value;
+
+            CascadingContext.Grid.CellChangeManager.Track(row, context);
+        }
+    }
+
+}

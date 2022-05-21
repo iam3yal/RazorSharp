@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <OutputType>Library</OutputType>
+        <Configurations>Debug;Release;Benchmarks</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <LangVersion>default</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="7.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\RazorSharp.Demo.Data.Models\RazorSharp.Demo.Data.Models.csproj" />
+        <ProjectReference Include="..\RazorSharp.Demo.Search\RazorSharp.Demo.Search.csproj" />
+        <ProjectReference Include="..\RazorSharp\RazorSharp.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Interop\HtmlElement.page.razor" />
+    </ItemGroup>
+
+</Project>

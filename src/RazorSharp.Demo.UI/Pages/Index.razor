@@ -1,0 +1,12 @@
+﻿@page "/"
+@using RazorSharp.Core.Runtime
+
+<PageTitle>Index</PageTitle>
+
+<h3>Blazor Runtime Environment</h3>
+
+<p>Host: @(RuntimeHost.IsClientSide ? "WebAssembly" : "Server")</p>
+
+<h3>Blazor LifeCycle Order</h3>
+
+<LifeCycle></LifeCycle>

@@ -1,0 +1,23 @@
+﻿.main {
+    line-height: 1.5;
+    font-weight: 600;
+    width: fit-content;
+    margin: 0.5rem;
+    display: grid;
+    gap: 2rem;
+    grid-template-areas:
+        "grid-nav grid-content";
+}
+
+.navigation {
+    width: fit-content;
+    width: -moz-fit-content;
+    grid-area: grid-nav;
+    white-space: nowrap;
+}
+
+.content {
+    width: max-content;
+    width: -moz-max-content;
+    grid-area: grid-content;
+}

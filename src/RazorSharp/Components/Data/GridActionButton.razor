@@ -1,0 +1,11 @@
+@inherits GridComponentBase<TItem>
+@using RazorSharp.Components.Buttons
+@typeparam TItem
+
+@if (!_isTemplate)
+{
+    <Button
+        OnClick="@OnClickHandlerAsync">
+        @Name
+    </Button>
+}

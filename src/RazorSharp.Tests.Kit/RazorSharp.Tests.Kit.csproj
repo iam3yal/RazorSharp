@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Configurations>Debug;Release;Benchmarks</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <LangVersion>default</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="Utilities\" />
+        <None Remove="Moq" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="bunit" Version="1.21.9" />
+        <PackageReference Include="bunit.web" Version="1.21.9" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.5" />
+        <PackageReference Include="Microsoft.Playwright" Version="1.33.0" />
+        <PackageReference Include="Moq" Version="4.18.4" />
+        <PackageReference Include="xunit.abstractions" Version="2.0.3" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\RazorSharp.Core\RazorSharp.Core.csproj" />
+        <ProjectReference Include="..\RazorSharp\RazorSharp.csproj" />
+    </ItemGroup>
+</Project>

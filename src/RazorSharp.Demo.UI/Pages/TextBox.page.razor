@@ -1,0 +1,79 @@
+@page "/TextBox"
+@using RazorSharp.Components.Forms
+@using RazorSharp.Components.Labels
+@using System.Diagnostics.CodeAnalysis
+@using RazorSharp.Components.Buttons
+
+<PageTitle>TextBox</PageTitle>
+
+@if (!string.IsNullOrEmpty(_bindValue))
+{
+    <Label>Binded Value: @_bindValue<br /></Label>
+}
+
+@if (!string.IsNullOrEmpty(_currentValue))
+{
+    <Label>Current Value: @_currentValue<br /></Label>
+}
+
+@if (!string.IsNullOrEmpty(_changedValue))
+{
+    <Label>Changed Value: @_changedValue<br /></Label>
+}
+
+<h3>OnInput w/ OnChange</h3>
+
+<TextBox
+    @ref="Input"
+    OnInput="@InputHandler"
+    OnChange="@ChangeHandler"
+    style="width: 5rem" />
+
+<Button OnClick="@SetFocusHandler">Set Focus</Button>
+<Button OnClick="@RemoveFocusHandler">Remove Focus</Button>
+
+<h3>ValueChanged Only</h3>
+
+<TextBox
+    Value="@_bindValue"
+    ValueChanged="@ValueChangedHandler"
+    style="width: 5rem" />
+
+<h3>bind-Value Syntax</h3>
+
+<TextBox
+    @bind-Value="_bindValue"
+    style="width: 5rem" />
+
+<h3>bind-Value w/ OnInput & OnChange</h3>
+
+<TextBox
+    @bind-Value="_bindValue"
+    OnInput="@InputHandler"
+    OnChange="@ChangeHandler"
+    style="width: 5rem" />
+
+@code {
+    private string? _currentValue;
+    private string? _changedValue;
+    private string? _bindValue;
+
+    [NotNull]
+    private TextBox? Input { get; set; }
+
+    private async Task SetFocusHandler()
+        => await Input.FocusAsync();
+
+    private async Task RemoveFocusHandler()
+        => await Input.BlurAsync();
+
+    private void ChangeHandler(ChangeEventArgs args)
+        => _changedValue = args.Value as string;
+
+    private void InputHandler(ChangeEventArgs args)
+        => _currentValue = args.Value as string;
+
+    private void ValueChangedHandler(string value)
+        => _bindValue = value;
+
+}

@@ -1,0 +1,20 @@
+@page "/Components/Forms/WebInput/Input"
+@using System.Text
+@using RazorSharp.Components.Forms
+
+<WebInput
+    TValue="string"
+    OnChange="@ChangeHandler"
+    OnInput="@InputHandler"
+    data-testid="WebInput" data-event="@_sb.ToString()">
+</WebInput>
+
+@code {
+    private readonly StringBuilder _sb = new();
+
+    private void ChangeHandler()
+        => _sb.Append("change;");
+
+    private void InputHandler()
+        => _sb.Append("input;");
+}

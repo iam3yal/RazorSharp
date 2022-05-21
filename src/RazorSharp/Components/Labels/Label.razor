@@ -1,0 +1,26 @@
+﻿@inherits WebElementBase
+
+@{
+    base.BuildRenderTree(__builder);
+}
+
+@switch (Target)
+{
+    case WebElementBase {Id: var id}:
+        <label for="@id">@ChildContent</label>
+        break;
+    case string id:
+        <label for="@id">@ChildContent</label>
+        break;
+    default:
+    {
+        if (Target is not null)
+        {
+            throw new InvalidOperationException($"The property '{nameof(Target)}' does not support the type '{Target.GetType()}'.");
+        }
+
+        <label>@ChildContent</label>
+
+        break;
+    }
+}

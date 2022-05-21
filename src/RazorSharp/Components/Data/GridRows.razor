@@ -1,0 +1,123 @@
+@inherits GridComponentBase<TItem>
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@typeparam TItem
+
+@if (_rerendered)
+{
+    <tbody>
+        <CascadingValue Name="Rows" Value="@(this)" IsFixed="true">
+            @if (CascadingContext.Grid is {HasDataSource: true} grid)
+            {
+                if (grid.Registry.TryGetComponent<GridRowsVirtualizeOptions<TItem>>(out var virtualizer))
+                {
+                    <Virtualize Items="@grid.DataSource" Context="item"
+                                ItemSize="@virtualizer.ItemSize"
+                                OverscanCount="@virtualizer.OverscanCount"
+                                SpacerElement="@virtualizer.SpacerElement">
+                        @RenderGridRow(item)
+                    </Virtualize>
+                }
+                else
+                {
+                    foreach (var item in grid.DataSource)
+                    {
+                        @RenderGridRow(item)
+                    }
+                }
+            }
+            @if (ChildContent is not null)
+            {
+                @ChildContent
+            }
+        </CascadingValue>
+    </tbody>
+}
+
+@code {
+
+    private IEnumerable<GridCellContext<TItem>?> EnumerateCells(TItem? item)
+    {
+        var itemType = typeof(TItem);
+        var itemProps = itemType.GetProperties();
+
+        for (var i = 0; i < CascadingContext.Grid.Columns.Count; i++)
+        {
+            if (item is not null)
+            {
+                var column = CascadingContext.Grid.Columns[i];
+
+                if (column is { Actions: { } actions })
+                {
+                    yield return new GridCellContext<TItem>(column, item, i, actions.Items);
+                }
+
+                yield return new GridCellContext<TItem>(column, item, i, itemProps);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+    }
+
+    private RenderFragment RenderGridRow(TItem? item)
+    {
+        if (RowTemplate is not null)
+        {
+            GridCellContext<TItem>?[]? cells = null;
+            var cellIndex = 0;
+
+            foreach (var context in EnumerateCells(item))
+            {
+                if (context is not null)
+                {
+                    cells ??= new GridCellContext<TItem>[CascadingContext.Grid.Columns.Count];
+                    cells[cellIndex++] = context;
+                }
+            }
+
+            return RowTemplate(new(item, cells));
+        }
+
+        return RenderDefaultGridRow(item);
+    }
+
+    private RenderFragment RenderDefaultGridRow(TItem? item)
+    {
+        GridRow<TItem>? gridRow = null!;
+
+        return @<GridRow TItem="TItem" @ref="gridRow" @key="item">
+                   @* ReSharper disable once ConvertIfStatementToSwitchStatement *@
+                   @{
+                       foreach (var context in EnumerateCells(item))
+                       {
+                           if (context is { Actions: { } actions })
+                           {
+                               <GridCell TItem="TItem" Context="context">
+                                   @if (gridRow is not null)
+                                   {
+                                       foreach (var action in actions.Where(x => x.EditState == gridRow.EditState))
+                                       {
+                                           <DynamicComponent Type="action.GetType()" Parameters="@action.Parameters" />
+                                       }
+                                   }
+                               </GridCell>
+                           }
+                           else if (context is { OriginalContent: { } content })
+                           {
+                               <GridCell TItem="TItem" Context="context">
+                                   @content
+                               </GridCell>
+                           }
+                           else
+                           {
+                               <GridCell TItem="TItem" Context="context">
+                                   &nbsp;
+                               </GridCell>
+                           }
+                       }
+                   }
+               </GridRow>;
+    }
+
+}

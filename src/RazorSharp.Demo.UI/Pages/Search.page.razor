@@ -1,0 +1,156 @@
+@page "/Search"
+@using Microsoft.Extensions.Logging
+@using RazorSharp.Demo.Data.Models
+@using RazorSharp.Demo.Search
+@using RazorSharp.Demo.Data.Converters
+@using System.Text.RegularExpressions
+@using RazorSharp.Components.Forms
+@inject IHttpClientFactory ClientFactory
+@inject ILogger<Search_page> Logger
+
+<PageTitle>Debounce</PageTitle>
+
+<div>
+    <div style="text-align: left">
+        Search:
+        <TextBox
+            OnDebounce="@DebounceHandler"
+            Placeholder="e.g. country:colombia;age:77 or colombia"
+            style="width: 20rem" />
+        @if (_people?.Length > 0)
+        {
+            <span>&nbsp;&nbsp;@_people.Length people found.</span>
+        }
+    </div>
+
+    <br />
+
+    @if (_people is not null)
+    {
+        var itemType = typeof(Person);
+        var props = itemType.GetProperties();
+
+        if (props.Length > 0)
+        {
+            <br />
+            <div class="grid">
+                <table>
+                    <thead>
+                        <tr>
+                            @foreach (var prop in props)
+                            {
+                                <td class="header">
+                                    @(prop.Name is "PermanentAccountNumber" ? "PAN" : prop.Name)
+                                </td>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var person in _people)
+                        {
+                            <tr>
+                                @foreach (var prop in props)
+                                {
+                                    var value = prop.GetValue(person, null);
+                                    var content = ValueConverter.ToString(value);
+                                    var title = content;
+
+                                    var nameSpan = prop.Name.AsSpan();
+
+                                    foreach (var keyword in KeywordParser.Parse(_keyword))
+                                    {
+                                        if (keyword.HasValue && (!keyword.HasName || nameSpan.Equals(keyword.Name, StringComparison.InvariantCultureIgnoreCase)))
+                                        {
+                                            content = Regex.Replace(content, keyword.Value.ToString(), """<span class="search-marker">$0</span>""", RegexOptions.IgnoreCase);
+                                        }
+                                    }
+
+                                    <td class="content" title="@title">
+                                        @((MarkupString) content)
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else if (!_isDataServerResponding)
+    {
+        <span class="http-status">The data server is not responding / connected.</span>
+    }
+</div>
+
+<!--suppress CssUnusedSymbol -->
+<style>
+    .grid {
+        width: 90vw; 
+        height: 60vh; 
+        overflow: auto;
+        white-space: nowrap;
+    }
+    .header {
+        width: 10rem;
+        display: inline-block;
+    }
+    .content {
+        width: 10rem;
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        
+    }
+    .search-marker {
+        background-color: darkgray;
+    }
+    .http-status
+    {
+        color: red;
+    }
+</style>
+
+@code {
+
+    private Person[]? _people;
+    private bool _isDataServerResponding = true;
+    private HttpClient? _http;
+    private string? _keyword = "";
+
+    protected override void OnInitialized()
+        => _http = ClientFactory.CreateClient("DataServer");
+
+    private async Task DebounceHandler(ChangeEventArgs args)
+    {
+        var value = args.Value as string;
+
+        if (_http is not null && !string.IsNullOrEmpty(value))
+        {
+            _keyword = value;
+
+            try
+            {
+                _isDataServerResponding = true;
+
+                _people = await _http.GetFromJsonAsync<Person[]>(
+                    $"/api/people/search?value={value}");
+            }
+            catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
+            {
+                _isDataServerResponding = false;
+
+                _people = null;
+
+                Logger.Log(LogLevel.Debug, ex, ex.Message);
+
+                await Task.CompletedTask;
+            }
+            finally
+            {
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+    }
+
+}

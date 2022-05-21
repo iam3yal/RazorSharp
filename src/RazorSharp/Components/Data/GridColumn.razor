@@ -1,0 +1,17 @@
+@inherits GridComponentBase<TItem>
+@typeparam TItem
+
+<CascadingValue Name="Column" Value="@(this)" IsFixed="true">
+    <th>
+        @if (ChildContent is not null)
+        {
+            @ChildContent
+        }
+        @if (ActionTemplate is not null)
+        {
+            @((MarkupString) "<!-- ACTION TEMPLATE -->")
+
+            @ActionTemplate
+        }
+    </th>
+</CascadingValue>

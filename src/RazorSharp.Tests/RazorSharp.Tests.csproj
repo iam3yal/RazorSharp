@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>RazorSharp</RootNamespace>
+        <Configurations>Debug;Release;Benchmarks</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <LangVersion>default</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Remove="bunit" />
+        <None Remove="xunit" />
+        <None Remove="NUnit" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="bunit" Version="1.21.9" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+        <PackageReference Include="xunit" Version="2.4.2" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\RazorSharp.Tests.TestDoubles\RazorSharp.Tests.TestDoubles.csproj" />
+        <ProjectReference Include="..\RazorSharp\RazorSharp.csproj" />
+    </ItemGroup>
+</Project>

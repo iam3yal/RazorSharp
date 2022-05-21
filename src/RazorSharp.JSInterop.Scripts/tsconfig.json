@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "rootDir": "./wwwroot",
+    "module": "ES2022",
+    "moduleDetection": "auto",
+    "target": "ES2019",
+    "strict": true,
+    "useUnknownInCatchVariables": true,
+    "useDefineForClassFields": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noFallthroughCasesInSwitch": true,
+    "noErrorTruncation": true,
+    "sourceMap": false,
+    "inlineSourceMap": false,
+    "inlineSources": false,
+    "removeComments": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": []
+  },
+  "compileOnSave": true,
+  "exclude": [
+    "node_modules"
+  ]
+}

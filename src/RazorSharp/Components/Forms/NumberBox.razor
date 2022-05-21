@@ -1,0 +1,7 @@
+@inherits WebInputBase<TValue>
+@using System.Numerics
+@typeparam TValue where TValue : INumber<TValue>
+
+@{
+    base.BuildRenderTree(__builder);
+}

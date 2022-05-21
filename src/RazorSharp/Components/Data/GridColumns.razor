@@ -1,0 +1,10 @@
+@inherits GridComponentBase<TItem>
+@typeparam TItem
+
+<CascadingValue Name="Columns" Value="@(this)" IsFixed="true">
+    <thead>
+        <GridRow TItem="TItem">
+            @ChildContent
+        </GridRow>
+    </thead>
+</CascadingValue>
