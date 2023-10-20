@@ -1,8 +1,11 @@
 @inherits GridComponentBase<TItem>
 @typeparam TItem
 
-<CascadingValue Name="Row" Value="@(this)" IsFixed="true">
-    <tr>
-        @ChildContent
-    </tr>
-</CascadingValue>
+@if (EditState is not GridEditState.None)
+{
+    <CascadingValue Name="Row" Value="@(this)" IsFixed="true">
+        <tr>
+            @ChildContent
+        </tr>
+    </CascadingValue>
+}

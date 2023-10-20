@@ -20,6 +20,7 @@
         <GridColumn>Has Children</GridColumn>
         <GridColumn>
             <ActionTemplate>
+                <GridDeleteButton />
                 <GridSaveButton />
                 <GridCancelButton />
             </ActionTemplate>
@@ -52,19 +53,19 @@
         await ValueTask.CompletedTask;
     }
 
-    private ICollection<Person?> People { get; } = new[]
+    private ICollection<Person?> People { get; } = new List<Person?>
     {
-        new Person(1, "Morton", "Scarlon", 38, true),
-        new Person(2, "Shannan", "Targett", 10, false),
-        new Person(3, "Raimundo", "Keitley", 3, false),
+        new(1, "Morton", "Scarlon", 38, true),
+        new(2, "Shannan", "Targett", 10, false),
+        new(3, "Raimundo", "Keitley", 3, false),
         null,
-        new Person(4, "Ronica", "Wemes", 38, true),
-        new Person(5, "Elana", "Riggey", 14, false),
-        new Person(6, "Bari", "Iiannone", 37, true),
-        new Person(7, "Emmaline", null, 15, false),
-        new Person(8, "Ravid", "Riches", 62, true),
-        new Person(9, "Elton", "Lettson", 47, false),
-        new Person(10, "Caprice", "Poschel", 51, true)
+        new(4, "Ronica", "Wemes", 38, true),
+        new(5, "Elana", "Riggey", 14, false),
+        new(6, "Bari", "Iiannone", 37, true),
+        new(7, "Emmaline", null, 15, false),
+        new(8, "Ravid", "Riches", 62, true),
+        new(9, "Elton", "Lettson", 47, false),
+        new(10, "Caprice", "Poschel", 51, true)
     };
 
     public record Person(
