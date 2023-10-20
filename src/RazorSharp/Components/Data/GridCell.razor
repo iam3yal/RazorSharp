@@ -2,6 +2,8 @@
 @using RazorSharp.Components.Forms
 @typeparam TItem
 
+@* REVISIT: This is temporarily and will be completely revisited in the future with much better code and more features. *@
+
 <CascadingValue Name="Cell" Value="@(this)" IsFixed="true">
     <td>
         @if (Context is not null && CascadingContext.Row is { EditState: GridEditState.Write })
@@ -25,42 +27,32 @@
                 }
                 case float @float:
                 {
+                    <WebInput TValue="float" Value="@(@float)" OnInput="@OnChangeHandlerAsync" />
                     break;
                 }
                 case double @double:
                 {
+                    <WebInput TValue="double" Value="@(@double)" OnInput="@OnChangeHandlerAsync" />
                     break;
                 }
                 case char @char:
                 {
+                    <WebInput TValue="char" Value="@(@char)" OnInput="@OnChangeHandlerAsync" />
                     break;
                 }
                 case byte @byte:
                 {
+                    <WebInput TValue="byte" Value="@(@byte)" OnInput="@OnChangeHandlerAsync" />
                     break;
                 }
                 case long @long:
                 {
+                    <WebInput TValue="long" Value="@(@long)" OnInput="@OnChangeHandlerAsync" />
                     break;
                 }
                 case short @short:
                 {
-                    break;
-                }
-                case Enum e when e.GetType().GetEnumUnderlyingType() is var enumType:
-                {
-                    if (enumType == typeof(int))
-                    {
-                    }
-                    else if (enumType == typeof(short))
-                    {
-                    }
-                    else if (enumType == typeof(byte))
-                    {
-                    }
-                    else if (enumType == typeof(long))
-                    {
-                    }
+                    <WebInput TValue="short" Value="@(@short)" OnInput="@OnChangeHandlerAsync" />
                     break;
                 }
                 default:
@@ -80,11 +72,100 @@
 
 @code {
 
-    private void OnChangeHandlerAsync(ChangeEventArgs e)
+    private void OnChangeHandlerAsync(ChangeEventArgs args)
     {
         if (CascadingContext.Row is { } row && Context is { } context)
         {
-            context.CurrentContent = e.Value;
+            switch (args.Value)
+            {
+                case bool @bool:
+                {
+                    context.CurrentContent = @bool;
+                    break;
+                }
+                default:
+                {
+                    var value = args.Value as string ?? "";
+
+                    switch (context.OriginalContent)
+                    {
+                        case string:
+                        {
+                            context.CurrentContent = value;
+                            break;
+                        }
+                        case int:
+                        {
+                            if (int.TryParse(value, out var result))
+                            {
+                                context.CurrentContent = result;
+                            }
+
+                            break;
+                        }
+                        case float:
+                        {
+                            if (float.TryParse(value, out var result))
+                            {
+                                context.CurrentContent = result;
+                            }
+
+                            break;
+                        }
+                        case double:
+                        {
+                            if (double.TryParse(value, out var result))
+                            {
+                                context.CurrentContent = result;
+                            }
+
+                            break;
+                        }
+                        case char:
+                        {
+                            if (char.TryParse(value, out var result))
+                            {
+                                context.CurrentContent = result;
+                            }
+
+                            break;
+                        }
+                        case byte:
+                        {
+                            if (byte.TryParse(value, out var result))
+                            {
+                                context.CurrentContent = result;
+                            }
+
+                            break;
+                        }
+                        case long:
+                        {
+                            if (long.TryParse(value, out var result))
+                            {
+                                context.CurrentContent = result;
+                            }
+
+                            break;
+                        }
+                        case short:
+                        {
+                            if (short.TryParse(value, out var result))
+                            {
+                                context.CurrentContent = result;
+                            }
+
+                            break;
+                        }
+                        default:
+                        {
+                            throw new InvalidOperationException("The type is not yet supported.");
+                        }
+                    }
+
+                    break;
+                }
+            }
 
             CascadingContext.Grid.CellChangeManager.Track(row, context);
         }
