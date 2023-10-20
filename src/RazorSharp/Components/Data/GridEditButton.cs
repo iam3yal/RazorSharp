@@ -10,9 +10,9 @@ public sealed class GridEditButton<TItem> : GridActionButton<TItem>
     [Parameter]
     public Func<TItem, ValueTask>? OnEdit { get; set; }
 
-    protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row)
+    protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row, GridCellContext<TItem> context)
     {
-        if (OnEdit is not null && CascadingContext.Cell is { Context: { Item: { } item } })
+        if (OnEdit is not null && context.Item is { } item)
         {
             await OnEdit(item);
         }

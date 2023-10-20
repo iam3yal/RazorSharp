@@ -16,7 +16,7 @@ public partial class GridActionButton<TItem> : GridComponentBase<TItem>
 
     public async ValueTask ClickAsync()
     {
-        if (CascadingContext.Row is { } row)
+        if (CascadingContext.Row is { } row && CascadingContext.Cell is { Context: { } context })
         {
             if (EditState is GridEditState.Read)
             {
@@ -27,12 +27,12 @@ public partial class GridActionButton<TItem> : GridComponentBase<TItem>
                 await row.ChangeEditStateAsync(GridEditState.Read);
             }
 
-            await OnClickHandlerAsync(row);
+            await OnClickHandlerAsync(row, context);
         }
         else
         {
             throw new InvalidOperationException(
-                $"The action cannot be handled. '{nameof(CascadingContext.Row)}' is null");
+                $"The action cannot be executed due to a null value. Please check '{nameof(CascadingContext)}' for null.");
         }
     }
 
@@ -53,7 +53,7 @@ public partial class GridActionButton<TItem> : GridComponentBase<TItem>
         }
     }
 
-    protected virtual ValueTask OnClickHandlerAsync(GridRow<TItem> row)
+    protected virtual ValueTask OnClickHandlerAsync(GridRow<TItem> row, GridCellContext<TItem> context)
         => ValueTask.CompletedTask;
 
     protected override void OnInitialized()

@@ -9,7 +9,7 @@ public sealed class GridCancelButton<TItem> : GridActionButton<TItem>
     [Parameter]
     public Func<ValueTask>? OnCancel { get; set; }
 
-    protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row)
+    protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row, GridCellContext<TItem> context)
     {
         await CascadingContext.Grid.CellChangeManager.CancelAsync(row);
 

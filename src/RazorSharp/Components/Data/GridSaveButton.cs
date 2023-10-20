@@ -10,7 +10,7 @@ public sealed class GridSaveButton<TItem>
     [Parameter]
     public Func<ValueTask>? OnSave { get; set; }
 
-    protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row)
+    protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row, GridCellContext<TItem> context)
     {
         await CascadingContext.Grid.CellChangeManager.SaveAsync(row);
 
