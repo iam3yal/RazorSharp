@@ -14,6 +14,8 @@ public sealed class GridSaveButton<TItem>
     {
         await CascadingContext.Grid.CellChangeManager.SaveAsync(row);
 
+        await row.ToggleEditStateAsync(EditState);
+
         if (OnSave is not null)
         {
             await OnSave();

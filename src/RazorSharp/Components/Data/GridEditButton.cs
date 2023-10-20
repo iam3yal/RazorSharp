@@ -12,6 +12,8 @@ public sealed class GridEditButton<TItem> : GridActionButton<TItem>
 
     protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row, GridCellContext<TItem> context)
     {
+        await row.ToggleEditStateAsync(EditState);
+
         if (OnEdit is not null && context.Item is { } item)
         {
             await OnEdit(item);

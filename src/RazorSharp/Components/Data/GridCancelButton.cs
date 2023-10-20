@@ -13,6 +13,8 @@ public sealed class GridCancelButton<TItem> : GridActionButton<TItem>
     {
         await CascadingContext.Grid.CellChangeManager.CancelAsync(row);
 
+        await row.ToggleEditStateAsync(EditState);
+
         if (OnCancel is not null)
         {
             await OnCancel();

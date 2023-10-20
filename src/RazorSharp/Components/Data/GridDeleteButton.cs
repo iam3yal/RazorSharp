@@ -13,14 +13,11 @@ public sealed class GridDeleteButton<TItem> : GridActionButton<TItem>
     {
         if (CascadingContext.Grid is { DataSource: { } source } && context.Item is { } item)
         {
-            // REVISIT: We shouldn't really have this flag but currently GridActionButton.ClickAsync calls ChangeEditStateAsync so we need to do it, will change later.
-            var removed = false;
-
             try
             {
                 if (source.Remove(item))
                 {
-                    removed = true;
+                    await row.ChangeEditStateAsync(GridEditState.None);
 
                     if (OnDelete is not null)
                     {
@@ -32,17 +29,6 @@ public sealed class GridDeleteButton<TItem> : GridActionButton<TItem>
             {
                 throw new InvalidOperationException(
                     $"The '{nameof(CascadingContext.Grid.DataSource)}' does not support deletion.", ex);
-            }
-            finally
-            {
-                if (removed)
-                {
-                    await row.ChangeEditStateAsync(GridEditState.None);
-                }
-                else
-                {
-                    await row.ChangeEditStateAsync(GridEditState.Read);
-                }
             }
         }
     }

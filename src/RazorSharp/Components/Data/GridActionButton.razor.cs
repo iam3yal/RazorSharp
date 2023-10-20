@@ -14,28 +14,6 @@ public partial class GridActionButton<TItem> : GridComponentBase<TItem>
 
     internal Dictionary<string, object?>? Parameters { get; private set; }
 
-    public async ValueTask ClickAsync()
-    {
-        if (CascadingContext.Row is { } row && CascadingContext.Cell is { Context: { } context })
-        {
-            if (EditState is GridEditState.Read)
-            {
-                await row.ChangeEditStateAsync(GridEditState.Write);
-            }
-            else
-            {
-                await row.ChangeEditStateAsync(GridEditState.Read);
-            }
-
-            await OnClickHandlerAsync(row, context);
-        }
-        else
-        {
-            throw new InvalidOperationException(
-                $"The action cannot be executed due to a null value. Please check '{nameof(CascadingContext)}' for null.");
-        }
-    }
-
     public override async Task SetParametersAsync(ParameterView parameters)
     {
         await base.SetParametersAsync(parameters);
@@ -69,5 +47,15 @@ public partial class GridActionButton<TItem> : GridComponentBase<TItem>
     }
 
     private async Task OnClickHandlerAsync(MouseEventArgs e)
-        => await ClickAsync();
+    {
+        if (CascadingContext.Row is { } row && CascadingContext.Cell is { Context: { } context })
+        {
+            await OnClickHandlerAsync(row, context);
+        }
+        else
+        {
+            throw new InvalidOperationException(
+                $"The action cannot be executed due to a null value. Please check '{nameof(CascadingContext)}' for null.");
+        }
+    }
 }

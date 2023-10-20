@@ -14,4 +14,16 @@ public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
 
         await InvokeAsync(StateHasChanged);
     }
+
+    public async ValueTask ToggleEditStateAsync(GridEditState editState)
+    {
+        EditState = editState switch
+        {
+            GridEditState.Read  => GridEditState.Write,
+            GridEditState.Write => GridEditState.Read,
+            _                   => GridEditState.None
+        };
+
+        await InvokeAsync(StateHasChanged);
+    }
 }
