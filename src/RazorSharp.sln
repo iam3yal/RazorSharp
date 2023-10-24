@@ -61,6 +61,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Data.Conver
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Data.Abstractions", "RazorSharp.Demo.Data.Abstractions\RazorSharp.Demo.Data.Abstractions.csproj", "{0887324B-DE24-4C24-9664-7F9825DC193B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.EntityFrameworkAdapter", "RazorSharp.EntityFrameworkAdapter\RazorSharp.EntityFrameworkAdapter.csproj", "{1B4F38F1-891D-45D4-93A6-FCEF7AB96FF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -180,6 +182,12 @@ Global
 		{0887324B-DE24-4C24-9664-7F9825DC193B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0887324B-DE24-4C24-9664-7F9825DC193B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0887324B-DE24-4C24-9664-7F9825DC193B}.Benchmarks|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B4F38F1-891D-45D4-93A6-FCEF7AB96FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B4F38F1-891D-45D4-93A6-FCEF7AB96FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B4F38F1-891D-45D4-93A6-FCEF7AB96FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B4F38F1-891D-45D4-93A6-FCEF7AB96FF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B4F38F1-891D-45D4-93A6-FCEF7AB96FF0}.Benchmarks|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B4F38F1-891D-45D4-93A6-FCEF7AB96FF0}.Benchmarks|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -222,5 +230,6 @@ Global
 		{94EA66E8-D799-4F4F-A157-FD03BF203275} = {8BCBE533-F93C-4E0D-A673-F43A95DF0939}
 		{112EEF17-635D-48C1-810D-56A255DD3241} = {A2DC3A42-673A-4C9E-9C10-412A6C44F157}
 		{0887324B-DE24-4C24-9664-7F9825DC193B} = {A2DC3A42-673A-4C9E-9C10-412A6C44F157}
+		{1B4F38F1-891D-45D4-93A6-FCEF7AB96FF0} = {8BCBE533-F93C-4E0D-A673-F43A95DF0939}
 	EndGlobalSection
 EndGlobal
