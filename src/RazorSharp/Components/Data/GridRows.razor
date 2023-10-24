@@ -11,6 +11,7 @@
                 if (grid.Registry.TryGetComponent<GridRowsVirtualizeOptions<TItem>>(out var virtualizer))
                 {
                     <Virtualize Items="@grid.DataSource" Context="item"
+                                ItemsProvider="@virtualizer.ItemsProvider"
                                 ItemSize="@virtualizer.ItemSize"
                                 OverscanCount="@virtualizer.OverscanCount"
                                 SpacerElement="@virtualizer.SpacerElement">

@@ -12,6 +12,9 @@ public sealed class GridRowsVirtualizeOptions<TItem> : GridComponentBase<TItem>
     public float ItemSize { get; set; } = 50f;
 
     [Parameter]
+    public ItemsProviderDelegate<TItem>? ItemsProvider { get; set; }
+
+    [Parameter]
     public int OverscanCount { get; set; } = 3;
 
     [Parameter]
@@ -31,5 +34,14 @@ public sealed class GridRowsVirtualizeOptions<TItem> : GridComponentBase<TItem>
         }
 
         CascadingContext.Grid.Registry.Add<GridRowsVirtualizeOptions<TItem>>(this);
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (CascadingContext.Grid.DataSource is not null && ItemsProvider is not null)
+        {
+            throw new InvalidOperationException(
+                $"The '{nameof(DataGrid<TItem>)}' can only accept a single source of data.\nDo not supply both '{nameof(DataGrid<TItem>)}.{nameof(CascadingContext.Grid.DataSource)}' and '{nameof(GridRowsVirtualizeOptions<TItem>)}.{nameof(ItemsProvider)}'.");
+        }
     }
 }
