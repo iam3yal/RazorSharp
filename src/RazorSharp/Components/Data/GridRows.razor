@@ -6,12 +6,12 @@
 {
     <tbody>
         <CascadingValue Name="Rows" Value="@(this)" IsFixed="true">
-            @if (CascadingContext.Grid is {HasDataSource: true} grid)
+            @if (CascadingContext.Grid is {Items: not null} grid)
             {
                 if (grid.Registry.TryGetComponent<GridRowsVirtualizeOptions<TItem>>(out var virtualizer))
                 {
-                    <Virtualize Items="@grid.DataSource" Context="item"
-                                ItemsProvider="@virtualizer.ItemsProvider"
+                    <Virtualize Items="@grid.Items" Context="item"
+                                ItemsProvider="@grid.ItemsProvider"
                                 ItemSize="@virtualizer.ItemSize"
                                 OverscanCount="@virtualizer.OverscanCount"
                                 SpacerElement="@virtualizer.SpacerElement">
@@ -20,7 +20,7 @@
                 }
                 else
                 {
-                    foreach (var item in grid.DataSource)
+                    foreach (var item in grid.Items)
                     {
                         @RenderGridRow(item)
                     }

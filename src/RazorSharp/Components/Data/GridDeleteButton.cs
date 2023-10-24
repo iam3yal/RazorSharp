@@ -11,11 +11,11 @@ public sealed class GridDeleteButton<TItem> : GridActionButton<TItem>
 
     protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row, GridCellContext<TItem> context)
     {
-        if (CascadingContext.Grid is { DataSource: { } source } && context.Item is { } item)
+        if (CascadingContext.Grid is { Items: { } items } && context.Item is { } item)
         {
             try
             {
-                if (source.Remove(item))
+                if (items.Remove(item))
                 {
                     await row.ChangeEditStateAsync(GridEditState.None);
 
@@ -28,7 +28,7 @@ public sealed class GridDeleteButton<TItem> : GridActionButton<TItem>
             catch (NotSupportedException ex)
             {
                 throw new InvalidOperationException(
-                    $"The '{nameof(CascadingContext.Grid.DataSource)}' does not support deletion.", ex);
+                    $"The '{nameof(CascadingContext.Grid.Items)}' does not support deletion.", ex);
             }
         }
     }

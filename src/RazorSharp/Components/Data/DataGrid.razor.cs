@@ -1,5 +1,7 @@
 namespace RazorSharp.Components.Data;
 
+using Microsoft.AspNetCore.Components.Web.Virtualization;
+
 public sealed partial class DataGrid<TItem> : WebComponent
     where TItem : class
 {
@@ -11,11 +13,19 @@ public sealed partial class DataGrid<TItem> : WebComponent
     public GridColumnCollection<TItem> Columns { get; } = new ();
 
     [Parameter]
-    public ICollection<TItem>? DataSource { get; set; }
+    public ICollection<TItem>? Items { get; set; }
+
+    [Parameter]
+    public ItemsProviderDelegate<TItem>? ItemsProvider { get; set; }
 
     public GridComponentRegistry Registry { get; } = new ();
 
-    [MemberNotNullWhen(true, nameof(DataSource))]
-    internal bool HasDataSource
-        => DataSource is not null && DataSource.Count > 0;
+    protected override void OnParametersSet()
+    {
+        if (Items is not null && ItemsProvider is not null)
+        {
+            throw new InvalidOperationException(
+                $"The '{nameof(DataGrid<TItem>)}' can only accept a single source of data.\nDo not supply both '{nameof(Items)}' and '{nameof(ItemsProvider)}'.");
+        }
+    }
 }
