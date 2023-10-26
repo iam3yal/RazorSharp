@@ -8,23 +8,20 @@ public sealed class GridSaveButton<TItem>
         => (Name, EditState) = ("Save", GridEditState.Write);
 
     [Parameter]
-    public Func<ValueTask<bool>>? OnSave { get; set; }
+    public Func<bool, ValueTask<bool>>? OnSave { get; set; }
 
     protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row, GridCellContext<TItem> context)
     {
+        var isSaved = CascadingContext.Grid.CellChangeManager.Save(row);
+
         if (OnSave is not null)
         {
-            var isSaved = CascadingContext.Grid.CellChangeManager.Save(row);
+            isSaved = await OnSave(isSaved);
+        }
 
-            if (isSaved)
-            {
-                isSaved = await OnSave();
-
-                if (isSaved)
-                {
-                    await row.ToggleEditStateAsync(EditState);
-                }
-            }
+        if (isSaved)
+        {
+            await row.ToggleEditStateAsync(EditState);
         }
     }
 }
