@@ -4,15 +4,6 @@ This document acknowledges the use of code and resources that were copied/pasted
 
 # Contributions
 
-The code and resources obtained from the projectes noted below are used under their respective licensing terms. Please refer to the relevant repository for detailed license information.
+### Microsoft
 
-### [QuickGrid](https://aspnet.github.io/quickgridsamples/)
-
-#### Author(s): Microsoft
-
-#### Source Link(s):
-
-* RazorSharp.EntityFrameworkAdapter: [Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter](https://github.com/dotnet/aspnetcore/tree/main/src/Components/QuickGrid/Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter/src)
-* RazorSharp.Framework/IAsyncQueryExecutor.cs: [IAsyncQueryExecutor.cs](https://github.com/dotnet/aspnetcore/blob/main/src/Components/QuickGrid/Microsoft.AspNetCore.Components.QuickGrid/src/IAsyncQueryExecutor.cs)
-
-
+This project incorporates code or resources derived from Microsoft's Blazor components. I respect and adhere to the licensing terms of these components. For detailed licensing information, please refer to the relevant repository. https://github.com/dotnet/aspnetcore
