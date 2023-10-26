@@ -7,28 +7,17 @@ public sealed class GridDeleteButton<TItem> : GridActionButton<TItem>
         => (Name, EditState) = ("Delete", GridEditState.Read);
 
     [Parameter]
-    public Func<ValueTask>? OnDelete { get; set; }
+    public Func<TItem, ValueTask<bool>>? OnDelete { get; set; }
 
     protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row, GridCellContext<TItem> context)
     {
-        if (CascadingContext.Grid is { Items: { } items } && context.Item is { } item)
+        if (OnDelete is not null && context.Item is { } item)
         {
-            try
-            {
-                if (items.Remove(item))
-                {
-                    await row.ChangeEditStateAsync(GridEditState.None);
+            var isDeleted = await OnDelete(item);
 
-                    if (OnDelete is not null)
-                    {
-                        await OnDelete();
-                    }
-                }
-            }
-            catch (NotSupportedException ex)
+            if (isDeleted)
             {
-                throw new InvalidOperationException(
-                    $"The '{nameof(CascadingContext.Grid.Items)}' does not support deletion.", ex);
+                await row.ChangeEditStateAsync(GridEditState.None);
             }
         }
     }
