@@ -8,7 +8,7 @@ public sealed class GridCellChangeManager<TItem>
     private readonly List<GridCellContext<TItem>> _cells = new ();
     private readonly HashSet<GridRow<TItem>> _rows = new ();
 
-    public async ValueTask CancelAsync(GridRow<TItem> row)
+    public void Cancel(GridRow<TItem> row)
     {
         Precondition.IsNotNull(row);
 
@@ -16,18 +16,22 @@ public sealed class GridCellChangeManager<TItem>
         {
             foreach (var context in IterateCells(existingRow))
             {
-                context.CellChangeAssociatedRow = null;
-
                 _cells.Remove(context);
+
+                context.CellChangeAssociatedRow = null;
             }
 
             _rows.Remove(row);
-
-            await row.ChangeEditStateAsync(GridEditState.Read);
         }
     }
 
-    public async ValueTask SaveAsync(GridRow<TItem> row)
+    public void Clear()
+    {
+        _rows.Clear();
+        _cells.Clear();
+    }
+
+    public bool Save(GridRow<TItem> row)
     {
         Precondition.IsNotNull(row);
 
@@ -35,17 +39,24 @@ public sealed class GridCellChangeManager<TItem>
         {
             foreach (var context in IterateCells(existingRow))
             {
-                context.SaveContent();
+                if (context.SaveContent())
+                {
+                    _cells.Remove(context);
 
-                context.CellChangeAssociatedRow = null;
-
-                _cells.Remove(context);
+                    context.CellChangeAssociatedRow = null;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             _rows.Remove(row);
 
-            await row.ChangeEditStateAsync(GridEditState.Read);
+            return true;
         }
+
+        return false;
     }
 
     internal void Track(GridRow<TItem> row, GridCellContext<TItem> context)

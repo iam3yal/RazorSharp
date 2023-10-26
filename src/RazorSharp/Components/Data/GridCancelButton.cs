@@ -11,7 +11,7 @@ public sealed class GridCancelButton<TItem> : GridActionButton<TItem>
 
     protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row, GridCellContext<TItem> context)
     {
-        await CascadingContext.Grid.CellChangeManager.CancelAsync(row);
+        CascadingContext.Grid.CellChangeManager.Cancel(row);
 
         await row.ToggleEditStateAsync(EditState);
 
