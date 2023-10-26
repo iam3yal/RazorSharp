@@ -52,13 +52,17 @@ public sealed class GridCellContext<TItem>
 
     internal GridRow<TItem>? CellChangeAssociatedRow { get; set; }
 
-    public void SaveContent()
+    public bool SaveContent()
     {
         if (_property is not null)
         {
             _property.SetValue(Item, CurrentContent);
 
             OriginalContent = CurrentContent;
+
+            return true;
         }
+
+        return false;
     }
 }
