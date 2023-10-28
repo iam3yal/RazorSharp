@@ -9,6 +9,10 @@
         <LangVersion>default</LangVersion>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <WasmBuildNative>true</WasmBuildNative>
+    </PropertyGroup>
+    
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' ">
         <ExternalConsole>true</ExternalConsole>
     </PropertyGroup>
@@ -32,6 +36,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\RazorSharp.Demo.UI\RazorSharp.Demo.UI.csproj" />
+        <ProjectReference Include="..\RazorSharp.EntityFrameworkAdapter\RazorSharp.EntityFrameworkAdapter.csproj" />
     </ItemGroup>
 
 </Project>

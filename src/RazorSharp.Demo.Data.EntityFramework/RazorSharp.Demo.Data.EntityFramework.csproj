@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="7.0.13" />
+      <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RazorSharp.Core\RazorSharp.Core.csproj" />
+      <ProjectReference Include="..\RazorSharp.Demo.Data.Converters\RazorSharp.Demo.Data.Converters.csproj" />
+      <ProjectReference Include="..\RazorSharp.Demo.Data.Models\RazorSharp.Demo.Data.Models.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Documents\products.json" />
+      <EmbeddedResource Include="Documents\products.json" />
+    </ItemGroup>
+
+</Project>

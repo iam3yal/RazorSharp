@@ -11,12 +11,17 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components" Version="7.0.5" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\RazorSharp.Demo.Data.Models\RazorSharp.Demo.Data.Models.csproj" />
+        <ProjectReference Include="..\RazorSharp.Demo.Data.EntityFramework\RazorSharp.Demo.Data.EntityFramework.csproj" />
         <ProjectReference Include="..\RazorSharp.Demo.Search\RazorSharp.Demo.Search.csproj" />
         <ProjectReference Include="..\RazorSharp\RazorSharp.csproj" />
     </ItemGroup>

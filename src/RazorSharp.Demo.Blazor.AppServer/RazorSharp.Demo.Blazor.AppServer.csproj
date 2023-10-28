@@ -14,6 +14,7 @@
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
     <ItemGroup>
         <ProjectReference Include="..\RazorSharp.Demo.UI\RazorSharp.Demo.UI.csproj" />
+        <ProjectReference Include="..\RazorSharp.EntityFrameworkAdapter\RazorSharp.EntityFrameworkAdapter.csproj" />
     </ItemGroup>
 
     <ItemGroup>

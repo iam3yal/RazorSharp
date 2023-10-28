@@ -1,0 +1,27 @@
+@page "/DataGrid/DataSource"
+@inject ProductsDbContext DbContext
+@using RazorSharp.Demo.Data.EntityFramework.Repositories
+@using RazorSharp.Components.Data
+@implements IAsyncDisposable
+
+<PageTitle>DataGrid \ DataSource</PageTitle>
+
+<DataGrid Items="@DbContext.Products">
+    <GridOptions>
+        <GridRowsVirtualizeOptions />
+    </GridOptions>
+    <GridColumns>
+        <GridColumn>Name</GridColumn>
+        <GridColumn>Description</GridColumn>
+        <GridColumn>Brand</GridColumn>
+        <GridColumn>Price</GridColumn>
+        <GridColumn>Quantity</GridColumn>
+    </GridColumns>
+    <GridRows />
+</DataGrid>
+
+@code
+{
+    public async ValueTask DisposeAsync()
+        => await DbContext.DisposeAsync();
+}

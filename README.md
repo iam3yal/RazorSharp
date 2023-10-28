@@ -66,20 +66,28 @@ dotnet restore
 dotnet build
 ```
 
-#### Enabling HTTPS Development Certificate (Optional)
-If you'd like to enable the HTTPS development certificate, use the following command:
+#### Optional: WebAssembly & Sqlite Support
+To use `Sqlite` with `WebAssembly` you have to install the `wasm-tools` so run these additional commands from the `src` directory:
+```
+cd RazorSharp.Demo.Blazor.WasmApp
+sudo dotnet workload restore
+cd ..
+```
+
+#### Optional: Enabling HTTPS Development Certificate
+If you'd like to enable the HTTPS development certificate, run the following command:
 ```
 dotnet dev-certs https --trust
 ```
 
 #### Running the demo on Blazor Server (Server-Side Rendering)
-To try the blazor server demo (`RazorSharp.Demo.ServerApp`), execute the following command:
+To try the blazor server demo (`RazorSharp.Demo.ServerApp`), run the following command:
 ```
 dotnet run --project RazorSharp.Demo.ServerApp
 ```
 
 #### Running the demo on Blazor Client (WebAssembly)
-To try the blazor wasm demo (`RazorSharp.Demo.WasmApp`), execute the following command:
+To try the blazor wasm demo (`RazorSharp.Demo.WasmApp`), run the following command:
 ```
 dotnet run --project RazorSharp.Demo.WasmAppServer
 ```
