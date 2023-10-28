@@ -2,37 +2,34 @@
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @typeparam TItem
 
-@if (_rerendered)
-{
-    <tbody>
-        <CascadingValue Name="Rows" Value="@(this)" IsFixed="true">
-            @if (CascadingContext.Grid is {Items: not null} grid)
+<tbody>
+    <CascadingValue Name="Rows" Value="@(this)" IsFixed="true">
+        @if (CascadingContext.Grid is {Items: not null} grid)
+        {
+            if (grid.Registry.TryGetComponent<GridRowsVirtualizeOptions<TItem>>(out var virtualizer))
             {
-                if (grid.Registry.TryGetComponent<GridRowsVirtualizeOptions<TItem>>(out var virtualizer))
+                <Virtualize @ref="@_virtualizeComponent" Context="item"
+                            ItemsProvider="@GetVirtualizedItems"
+                            ItemSize="@virtualizer.ItemSize"
+                            OverscanCount="@virtualizer.OverscanCount"
+                            SpacerElement="@virtualizer.SpacerElement">
+                    @RenderGridRow(item)
+                </Virtualize>
+            }
+            else
+            {
+                foreach (var item in _currentNonVirtualizedViewItems)
                 {
-                    <Virtualize Items="@grid.Items" Context="item"
-                                ItemsProvider="@grid.ItemsProvider"
-                                ItemSize="@virtualizer.ItemSize"
-                                OverscanCount="@virtualizer.OverscanCount"
-                                SpacerElement="@virtualizer.SpacerElement">
-                        @RenderGridRow(item)
-                    </Virtualize>
-                }
-                else
-                {
-                    foreach (var item in grid.Items)
-                    {
-                        @RenderGridRow(item)
-                    }
+                    @RenderGridRow(item)
                 }
             }
-            @if (ChildContent is not null)
-            {
-                @ChildContent
-            }
-        </CascadingValue>
-    </tbody>
-}
+        }
+        @if (ChildContent is not null)
+        {
+            @ChildContent
+        }
+    </CascadingValue>
+</tbody>
 
 @code {
 

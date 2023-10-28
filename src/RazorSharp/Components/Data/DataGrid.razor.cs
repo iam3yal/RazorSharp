@@ -13,12 +13,23 @@ public sealed partial class DataGrid<TItem> : WebComponent
     public GridColumnCollection<TItem> Columns { get; } = new ();
 
     [Parameter]
-    public ICollection<TItem>? Items { get; set; }
+    public IEnumerable<TItem>? Items { get; set; }
 
     [Parameter]
     public ItemsProviderDelegate<TItem>? ItemsProvider { get; set; }
 
+    public Func<ValueTask>? OnRefresh { get; set; }
+
     public GridComponentRegistry Registry { get; } = new ();
+
+    public async ValueTask RefreshAsync()
+    {
+        if (OnRefresh is not null)
+        {
+            await OnRefresh();
+            await InvokeAsync(StateHasChanged);
+        }
+    }
 
     protected override void OnParametersSet()
     {

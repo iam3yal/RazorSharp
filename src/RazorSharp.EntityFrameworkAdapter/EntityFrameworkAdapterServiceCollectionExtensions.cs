@@ -15,8 +15,6 @@ public static class EntityFrameworkAdapterServiceCollectionExtensions
     /// <param name="services">
     ///     The <see cref="IServiceCollection" />.
     /// </param>
-    public static void AddQuickGridEntityFrameworkAdapter(this IServiceCollection services)
-    {
-        services.AddSingleton<IAsyncQueryExecutor, EntityFrameworkAsyncQueryExecutor>();
-    }
+    public static void AddRazorSharpEntityFrameworkAdapter(this IServiceCollection services)
+        => services.AddSingleton<IAsyncQueryExecutor, EntityFrameworkAsyncQueryExecutor>();
 }
