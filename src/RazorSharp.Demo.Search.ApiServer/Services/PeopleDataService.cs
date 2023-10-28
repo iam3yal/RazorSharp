@@ -1,4 +1,4 @@
-namespace RazorSharp.Demo.Data.ApiServer.Services;
+namespace RazorSharp.Demo.Search.ApiServer.Services;
 
 using RazorSharp.Core.Contracts;
 using RazorSharp.Demo.Data.Abstractions.Services;

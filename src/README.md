@@ -19,6 +19,9 @@ Welcome to the RazorSharp project! This directory contains the source code for t
 ### RazorSharp.Dom
 - Contains types associated with the Document Object Model (DOM).
 
+### RazorSharp.EntityFrameworkAdapter
+- Provides specialized asynchronous support for `IQueryable<T>` by leveraging Entity Framework Core extensions.
+
 ### RazorSharp.Framework
 - Provides infrastructure and framework-level types for [RazorSharp](#razorsharp).
 
@@ -36,17 +39,20 @@ Welcome to the RazorSharp project! This directory contains the source code for t
 ### RazorSharp.Demo.UI
 - Demonstrates how to author [RazorSharp](#razorsharp) components and pages using Razor components.
 
-### RazorSharp.Demo.Data.ApiServer
-- Serves data through Web APIs for the demo.
-
-### RazorSharp.Demo.Blazor.AppServer
+### RazorSharp.Demo.Blazor.ServerApp
 - Renders [RazorSharp](#razorsharp) components from `RazorSharp.Demo.UI` on the server.
 
-### RazorSharp.Demo.Blazor.WasmApp
+### RazorSharp.Demo.Blazor.WasmClient
 - Renders [RazorSharp](#razorsharp) components from `RazorSharp.Demo.UI` on the client.
 
-### RazorSharp.Demo.Blazor.WasmAppServer
-- Serves the `RazorSharp.Demo.Blazor.WasmApp` application to the browser.
+### RazorSharp.Demo.Blazor.WasmServer
+- Serves the `RazorSharp.Demo.Blazor.WasmClient` application to the browser.
+
+### RazorSharp.Demo.Search.ApiServer
+- Serves data through Web APIs for the Search example.
+
+### RazorSharp.Demo.Data.EntityFramework
+- Sets up the configuration for the Entity Framework and Sqlite to be used by the demo.
 
 ## Tests
 
@@ -56,7 +62,7 @@ Welcome to the RazorSharp project! This directory contains the source code for t
 ### RazorSharp.Tests.E2E
 - Hosts End-to-End (E2E) tests for the [Core Class Library](#core-class-library).
 
-### RazorSharp.Tests.E2E.Blazor.AppServer
+### RazorSharp.Tests.E2E.Blazor.ServerApp
 - Serves as the E2E testing server for `RazorSharp.Tests.E2E`.
 
 Feel free to explore the various components of this project and contribute to its development!

@@ -5,7 +5,7 @@ VisualStudioVersion = 25.0.1700.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp", "RazorSharp\RazorSharp.csproj", "{4964F3BC-A361-4A03-9B88-96452D0F1A5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Blazor.WasmAppServer", "RazorSharp.Demo.Blazor.WasmAppServer\RazorSharp.Demo.Blazor.WasmAppServer.csproj", "{BEF5A49C-8AA3-48DE-B54C-7688AF80A0EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Blazor.WasmServer", "RazorSharp.Demo.Blazor.WasmServer\RazorSharp.Demo.Blazor.WasmServer.csproj", "{BEF5A49C-8AA3-48DE-B54C-7688AF80A0EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Tests.Kit", "RazorSharp.Tests.Kit\RazorSharp.Tests.Kit.csproj", "{D71116F0-651A-4CE3-9BF3-3A890CEF85B8}"
 EndProject
@@ -13,13 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Tests.TestDouble
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Tests", "RazorSharp.Tests\RazorSharp.Tests.csproj", "{189DD395-C86E-466F-89F3-0F1E025A1A6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Blazor.AppServer", "RazorSharp.Demo.Blazor.AppServer\RazorSharp.Demo.Blazor.AppServer.csproj", "{378552C5-78D3-4A22-BBC8-CEEB81A86ED7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Blazor.ServerApp", "RazorSharp.Demo.Blazor.ServerApp\RazorSharp.Demo.Blazor.ServerApp.csproj", "{378552C5-78D3-4A22-BBC8-CEEB81A86ED7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{34A23F0C-B597-4098-8739-3DCC26D85988} = {34A23F0C-B597-4098-8739-3DCC26D85988}
 		{C3BEC6E8-9EFF-48F4-A9AD-2C79B8D5339D} = {C3BEC6E8-9EFF-48F4-A9AD-2C79B8D5339D}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Blazor.WasmApp", "RazorSharp.Demo.Blazor.WasmApp\RazorSharp.Demo.Blazor.WasmApp.csproj", "{34A23F0C-B597-4098-8739-3DCC26D85988}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Blazor.WasmClient", "RazorSharp.Demo.Blazor.WasmClient\RazorSharp.Demo.Blazor.WasmClient.csproj", "{34A23F0C-B597-4098-8739-3DCC26D85988}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Data.Models", "RazorSharp.Demo.Data.Models\RazorSharp.Demo.Data.Models.csproj", "{2EF8EEED-1FC2-4905-95CB-28CC85CC54BE}"
 EndProject
@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Performance.Benc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Tests.E2E", "RazorSharp.Tests.E2E\RazorSharp.Tests.E2E.csproj", "{EF1D1124-99BF-4A97-84F5-46699732E900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Tests.E2E.Blazor.AppServer", "RazorSharp.Tests.E2E.Blazor.AppServer\RazorSharp.Tests.E2E.Blazor.AppServer.csproj", "{D18BD275-A82A-4C6D-9C7B-08956198141C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Tests.E2E.Blazor.ServerApp", "RazorSharp.Tests.E2E.Blazor.ServerApp\RazorSharp.Tests.E2E.Blazor.ServerApp.csproj", "{D18BD275-A82A-4C6D-9C7B-08956198141C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Core.Components", "RazorSharp.Core.Components\RazorSharp.Core.Components.csproj", "{1DAB450C-05E7-498E-8929-94856459EC66}"
 EndProject
@@ -51,7 +51,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.JSInterop.Script
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Framework", "RazorSharp.Framework\RazorSharp.Framework.csproj", "{399BAD89-7383-42EF-83AE-71801420371F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Data.ApiServer", "RazorSharp.Demo.Data.ApiServer\RazorSharp.Demo.Data.ApiServer.csproj", "{FF8E68DF-86C5-4615-A9E6-D87FC6981B83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Search.ApiServer", "RazorSharp.Demo.Search.ApiServer\RazorSharp.Demo.Search.ApiServer.csproj", "{FF8E68DF-86C5-4615-A9E6-D87FC6981B83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorSharp.Demo.Search", "RazorSharp.Demo.Search\RazorSharp.Demo.Search.csproj", "{F2747F29-549C-450F-B9AC-F43B2C3FF9A4}"
 EndProject

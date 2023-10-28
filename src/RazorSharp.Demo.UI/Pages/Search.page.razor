@@ -119,7 +119,7 @@
     private string? _keyword = "";
 
     protected override void OnInitialized()
-        => _http = ClientFactory.CreateClient("DataServer");
+        => _http = ClientFactory.CreateClient("ApiServer");
 
     private async Task DebounceHandler(ChangeEventArgs args)
     {

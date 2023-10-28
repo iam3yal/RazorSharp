@@ -1,4 +1,4 @@
-namespace RazorSharp.Demo.Blazor.AppServer.Pages;
+namespace RazorSharp.Demo.Blazor.ServerApp.Pages;
 
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

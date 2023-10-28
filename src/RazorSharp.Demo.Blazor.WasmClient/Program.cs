@@ -14,7 +14,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddRazorSharpEntityFrameworkAdapter();
 builder.Services.AddProductsDbContext();
-builder.Services.AddHttpClient("DataServer",
+builder.Services.AddHttpClient("ApiServer",
                                http => {
                                    http.BaseAddress = new Uri("https://localhost:7020");
                                });

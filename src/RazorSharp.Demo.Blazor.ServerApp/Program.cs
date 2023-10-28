@@ -9,7 +9,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddRazorSharpEntityFrameworkAdapter();
 builder.Services.AddProductsDbContext();
-builder.Services.AddHttpClient("DataServer",
+builder.Services.AddHttpClient("ApiServer",
                                http => {
                                    http.BaseAddress = new Uri("https://localhost:7020");
                                });

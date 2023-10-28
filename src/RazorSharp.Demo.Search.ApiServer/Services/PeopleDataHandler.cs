@@ -1,4 +1,4 @@
-namespace RazorSharp.Demo.Data.ApiServer.Services;
+namespace RazorSharp.Demo.Search.ApiServer.Services;
 
 using System.Collections.Immutable;
 using System.Text;
@@ -8,7 +8,6 @@ using RazorSharp.Core.Contracts;
 using RazorSharp.Demo.Data.Abstractions.Services;
 using RazorSharp.Demo.Data.Converters.Json;
 using RazorSharp.Demo.Data.Models;
-using RazorSharp.Demo.Search;
 
 public sealed class PeopleDataHandler : IDataProvider<IReadOnlyDictionary<Person, StringBuilder>>, IDataLoader
 {

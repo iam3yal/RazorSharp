@@ -1,7 +1,7 @@
-@page "/"
+﻿@page "/"
 @using Microsoft.AspNetCore.Components.Web
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using RazorSharp.Demo.UI
+@using RazorSharp.Tests.E2E.Blazor.ServerApp
+@namespace RazorSharp.Tests.E2E.ServerApp.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <!DOCTYPE html>
@@ -10,7 +10,6 @@
         <meta charset="utf-8" />
         <base href="~/" />
         <link href="css/site.css" rel="stylesheet" />
-        <link href="RazorSharp.Demo.Blazor.AppServer.styles.css" rel="stylesheet" />
         <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
     </head>
     <body>

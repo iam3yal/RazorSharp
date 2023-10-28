@@ -1,4 +1,4 @@
-namespace RazorSharp.Demo.Data.ApiServer.Controllers;
+namespace RazorSharp.Demo.Search.ApiServer.Controllers;
 
 using System.Text;
 
@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 using RazorSharp.Demo.Data.Abstractions.Services;
 using RazorSharp.Demo.Data.Models;
-using RazorSharp.Demo.Search;
 
 [ApiController]
 [Route("api/[controller]")]

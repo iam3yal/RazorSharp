@@ -26,7 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\RazorSharp.Tests.E2E.Blazor.AppServer\RazorSharp.Tests.E2E.Blazor.AppServer.csproj" Aliases="E2eServerApp" />
+        <ProjectReference Include="..\RazorSharp.Tests.E2E.Blazor.ServerApp\RazorSharp.Tests.E2E.Blazor.ServerApp.csproj" Aliases="E2EServerApp" />
         <ProjectReference Include="..\RazorSharp.Tests.Kit\RazorSharp.Tests.Kit.csproj" />
         <ProjectReference Include="..\RazorSharp\RazorSharp.csproj" />
     </ItemGroup>

@@ -3,8 +3,8 @@ using System.Text;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 using RazorSharp.Demo.Data.Abstractions.Services;
-using RazorSharp.Demo.Data.ApiServer.Services;
 using RazorSharp.Demo.Data.Models;
+using RazorSharp.Demo.Search.ApiServer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

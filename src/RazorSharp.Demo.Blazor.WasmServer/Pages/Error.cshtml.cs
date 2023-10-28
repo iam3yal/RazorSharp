@@ -1,4 +1,4 @@
-﻿namespace RazorSharp.Demo.Blazor.WasmAppServer.Pages;
+﻿namespace RazorSharp.Demo.Blazor.WasmServer.Pages;
 
 using System.Diagnostics;
 

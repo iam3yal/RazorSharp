@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\RazorSharp.Demo.Blazor.WasmApp\RazorSharp.Demo.Blazor.WasmApp.csproj" />
+        <ProjectReference Include="..\RazorSharp.Demo.Blazor.WasmClient\RazorSharp.Demo.Blazor.WasmClient.csproj" />
     </ItemGroup>
 
 </Project>
