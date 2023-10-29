@@ -2,7 +2,10 @@
 using RazorSharp.EntityFrameworkAdapter;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Logging.SetMinimumLevel(builder.Environment.IsDevelopment() ? LogLevel.Debug : LogLevel.Warning);
+
+builder.Logging
+       .SetMinimumLevel(builder.Environment.IsDevelopment() ? LogLevel.Debug : LogLevel.Warning)
+       .AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Warning);
 
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();

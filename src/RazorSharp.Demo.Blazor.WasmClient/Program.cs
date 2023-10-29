@@ -6,7 +6,10 @@ using RazorSharp.Demo.UI;
 using RazorSharp.EntityFrameworkAdapter;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.Logging.SetMinimumLevel(builder.HostEnvironment.IsDevelopment() ? LogLevel.Debug : LogLevel.Warning);
+
+builder.Logging
+       .SetMinimumLevel(builder.HostEnvironment.IsDevelopment() ? LogLevel.Debug : LogLevel.Warning)
+       .AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Warning);
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
