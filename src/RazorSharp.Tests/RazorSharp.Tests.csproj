@@ -19,9 +19,9 @@
         <None Remove="NUnit" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="bunit" Version="1.21.9" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
-        <PackageReference Include="xunit" Version="2.4.2" />
+        <PackageReference Include="bunit" Version="1.24.10" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+        <PackageReference Include="xunit" Version="2.5.3" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\RazorSharp.Tests.TestDoubles\RazorSharp.Tests.TestDoubles.csproj" />

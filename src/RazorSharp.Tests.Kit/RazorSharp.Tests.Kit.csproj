@@ -14,12 +14,12 @@
         <None Remove="Moq" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="bunit" Version="1.21.9" />
-        <PackageReference Include="bunit.web" Version="1.21.9" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.5" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.5" />
-        <PackageReference Include="Microsoft.Playwright" Version="1.33.0" />
-        <PackageReference Include="Moq" Version="4.18.4" />
+        <PackageReference Include="bunit" Version="1.24.10" />
+        <PackageReference Include="bunit.web" Version="1.24.10" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.13" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.13" />
+        <PackageReference Include="Microsoft.Playwright" Version="1.39.0" />
+        <PackageReference Include="Moq" Version="4.20.69" />
         <PackageReference Include="xunit.abstractions" Version="2.0.3" />
     </ItemGroup>
     <ItemGroup>
