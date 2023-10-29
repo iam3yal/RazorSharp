@@ -58,10 +58,7 @@ public sealed partial class GridRows<TItem> : GridComponentBase<TItem>
     // Gets called both by RefreshDataCoreAsync and directly by the Virtualize child component during scrolling
     private async ValueTask<ItemsProviderResult<TItem>> GetVirtualizedItems(ItemsProviderRequest request)
     {
-        // Debounce the requests. This eliminates a lot of redundant queries at the cost of slight lag after interactions.
-        // TODO: Consider making this configurable, or smarter (e.g., doesn't delay on first call in a batch, then the amount
-        // of delay increases if you rapidly issue repeated requests, such as when scrolling a long way)
-        await Task.Delay(100);
+        // TODO: Debounce the requests. This can eliminate a lot of redundant calls and queries when scrolling.
 
         if (request.CancellationToken.IsCancellationRequested)
         {
@@ -120,7 +117,6 @@ public sealed partial class GridRows<TItem> : GridComponentBase<TItem>
             if (items is IQueryable<TItem> queryableItems && _asyncQueryExecutor is not null)
             {
                 totalItemCount = await _asyncQueryExecutor.CountAsync(queryableItems);
-                items = await _asyncQueryExecutor.ToArrayAsync(queryableItems);
             }
             else
             {
