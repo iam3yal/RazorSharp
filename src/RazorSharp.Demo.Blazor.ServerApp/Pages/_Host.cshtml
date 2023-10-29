@@ -1,6 +1,5 @@
 @page "/"
 @using Microsoft.AspNetCore.Components.Web
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using RazorSharp.Demo.UI
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
@@ -10,6 +9,7 @@
         <meta charset="utf-8" />
         <base href="~/" />
         <link href="css/site.css" rel="stylesheet" />
+        @* ReSharper disable once Html.PathError *@
         <link href="RazorSharp.Demo.Blazor.ServerApp.styles.css" rel="stylesheet" />
         <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
     </head>
@@ -27,6 +27,8 @@
             <a class="dismiss">🗙</a>
         </div>
 
+        @* ReSharper disable Html.PathError *@
         <script src="_framework/blazor.server.js"></script>
+        @* ReSharper restore Html.PathError *@
     </body>
 </html>
