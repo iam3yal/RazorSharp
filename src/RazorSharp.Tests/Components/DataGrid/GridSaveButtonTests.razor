@@ -1,0 +1,65 @@
+@using System.Diagnostics.CodeAnalysis
+@using Microsoft.AspNetCore.Components.Web
+@using RazorSharp.Components.Data
+@using RazorSharp.Dom
+@using RazorSharp.Tests.TestDoubles.Fakes
+@code {
+
+    [Fact]
+    public async Task Should_save_the_new_value()
+    {
+        using var ctx = new TestContext();
+        ctx.JSInterop.Mode = JSRuntimeMode.Loose;
+
+        GridSaveButtonEventArgs? args = null;
+
+        var data = new List<FakePerson> { new() { Name = "Morton" } };
+
+        var component = ctx.Render(@<DataGrid Items="data">
+                                       <GridColumns>
+                                           <GridColumn>Name</GridColumn>
+                                           <GridColumn>
+                                               <ActionTemplate>
+                                                   <GridSaveButton OnSave="@OnSaveHandlerAsync" />
+                                               </ActionTemplate>
+                                           </GridColumn>
+                                       </GridColumns>
+                                       <GridRows TItem="FakePerson"
+                                                 OnRowCreated="@OnRowCreatedHandlerAsync"
+                                                 OnCellCreated="@OnCellCreatedHandlerAsync">
+                                       </GridRows>
+                                   </DataGrid>);
+
+        var element = component.Find(Tag.Button);
+
+        await element.ClickAsync(new MouseEventArgs());
+
+        Assert.Multiple(() => Assert.NotNull(args),
+                        () => Assert.True(args!.IsSaved),
+                        () => Assert.Equal(GridEditState.Read, args!.RowEditState));
+
+        [SuppressMessage("ReSharper", "SeparateLocalFunctionsWithJumpStatement")]
+        async ValueTask OnSaveHandlerAsync(GridSaveButtonEventArgs e)
+        {
+            args = e;
+
+            await ValueTask.CompletedTask;
+        }
+
+        [SuppressMessage("ReSharper", "SeparateLocalFunctionsWithJumpStatement")]
+        async ValueTask OnRowCreatedHandlerAsync(GridRow<FakePerson> row)
+            => await row.ChangeEditStateAsync(GridEditState.Write);
+
+        [SuppressMessage("ReSharper", "SeparateLocalFunctionsWithJumpStatement")]
+        async ValueTask OnCellCreatedHandlerAsync(GridRow<FakePerson> row, GridCell<FakePerson> cell)
+        {
+            if (cell.Context is GridCellDataContext<FakePerson> context)
+            {
+                row.Edit(context, "X");
+            }
+
+            await ValueTask.CompletedTask;
+        }
+    }
+
+}
