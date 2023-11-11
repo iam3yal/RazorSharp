@@ -99,6 +99,12 @@ To run the data server for the Search demo, execute the command below. Afterward
 dotnet run --project RazorSharp.Demo.DataServer
 ```
 
+#### Running E2E Tests
+All end-to-end (E2E) tests are implemented using Playwright. To execute these tests, please ensure that you run the following PowerShell script first while in the `src` directory of the project:
+```
+pwsh playwright.ps1 install
+```
+
 ## Terminating the `dotnet` Process
 To terminate the currently running `dotnet` process, simply press `Ctrl^C`.
 
