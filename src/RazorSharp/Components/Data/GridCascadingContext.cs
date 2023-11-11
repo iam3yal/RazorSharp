@@ -32,11 +32,11 @@ public readonly ref struct GridCascadingContext<TItem>
 
     public GridCell<TItem>? Cell { get; }
 
-    private GridColumns<TItem>? Columns { get; }
+    public GridColumns<TItem>? Columns { get; }
 
-    private GridOptions<TItem>? Options { get; }
+    public GridOptions<TItem>? Options { get; }
 
-    private GridRows<TItem>? Rows { get; }
+    public GridRows<TItem>? Rows { get; }
 
     public bool IsInsideOf(GridSection insideOf)
     {
