@@ -42,9 +42,9 @@ public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
     {
         EditState = editState switch
         {
-            GridEditState.Read  => GridEditState.Write,
-            GridEditState.Write => GridEditState.Read,
-            _                   => GridEditState.None
+            GridEditState.Read => GridEditState.Write,
+            GridEditState.Write or GridEditState.None => GridEditState.Read,
+            _ => throw new InvalidEnumArgumentException(nameof(editState), (int) editState, typeof(GridEditState))
         };
 
         await InvokeAsync(StateHasChanged);
