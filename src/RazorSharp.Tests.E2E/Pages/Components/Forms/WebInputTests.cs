@@ -105,7 +105,7 @@ public static class WebInputTests
 
             var input = await page.GetByTestIdAsync("WebInput");
 
-            await input.TypeAsync("x");
+            await input.FillAsync("x");
 
             await input.PressAsync("Enter");
 
@@ -123,7 +123,7 @@ public static class WebInputTests
 
             var input = await page.GetByTestIdAsync("WebInput");
 
-            await input.TypeAsync("x");
+            await input.FillAsync("x");
 
             await Assertions.Expect(input).ToHaveAttributeAsync("data-event", new Regex("input;"));
         }
