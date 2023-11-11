@@ -36,22 +36,40 @@ public static class RenderedComponentExtensions
 
         object? eventHandler;
 
-        if (propertyType.IsGenericType && propertyType.GetGenericArguments() is var propertyTypeArgs)
+        if (propertyType is { IsGenericType: true, GenericTypeArguments: var propertyTypeArgs })
         {
-            var methodName = nameof(EventHandlerFactory.CreateEventCallback);
-
+            string? methodName = null;
             Type? eventArgType = null;
 
-            if (propertyType.Name.StartsWith("EventCallback`1", StringComparison.Ordinal))
+            switch (propertyType.Name)
             {
-                eventArgType = propertyTypeArgs[0];
+                case var s when s.StartsWith("EventCallback`1", StringComparison.Ordinal):
+                {
+                    methodName = nameof(EventHandlerFactory.CreateEventCallbackHandler1);
+                    eventArgType = propertyTypeArgs[0];
+                    break;
+                }
+                case var s when s.StartsWith("Func`2", StringComparison.Ordinal)
+                                && propertyTypeArgs is [var arg1, var arg2]:
+                {
+                    if (arg2 == typeof(Task))
+                    {
+                        methodName = nameof(EventHandlerFactory.CreateEventFuncHandler0);
+                        eventArgType = arg1;
+                    }
+                    else if (arg2 == typeof(ValueTask))
+                    {
+                        methodName = nameof(EventHandlerFactory.CreateEventFuncHandler1);
+                        eventArgType = arg1;
+                    }
+
+                    break;
+                }
             }
-            else if (propertyType.Name.StartsWith("Func`2", StringComparison.Ordinal)
-                     && propertyTypeArgs is [var arg1, var arg2]
-                     && arg2 == typeof(Task))
+
+            if (methodName is null)
             {
-                methodName = nameof(EventHandlerFactory.CreateEventFunc);
-                eventArgType = arg1;
+                throw new InvalidOperationException($"No event handler method was matched.");
             }
 
             if (eventArgType is null)
@@ -59,14 +77,14 @@ public static class RenderedComponentExtensions
                 throw new InvalidOperationException($"The generic type '{propertyType}' is not supported.");
             }
 
-            var createMethod = typeof(EventHandlerFactory).GetMethod(methodName, 1, new[] { typeof(EventInfo) });
+            var createMethod = typeof(EventHandlerFactory).GetMethod(methodName);
             var genericCreateMethod = createMethod?.MakeGenericMethod(eventArgType);
 
             eventHandler = genericCreateMethod?.Invoke(null, new object?[] { eventInfo });
         }
         else
         {
-            eventHandler = EventHandlerFactory.CreateEventCallback(eventInfo);
+            eventHandler = EventHandlerFactory.CreateEventCallbackHandler(eventInfo);
         }
 
         property.SetValue(component.Instance, eventHandler);
@@ -133,14 +151,22 @@ public static class RenderedComponentExtensions
         where TChildComponent : IComponent
         => hostComponent.FindComponent<TChildComponent>();
 
-    public sealed class EventInfo
+    public class EventInfo
     {
         public EventInfo(string eventName)
             => Name = eventName;
 
         public bool IsEventFired { get; internal set; }
 
-        public string Name { get; private set; }
+        public string Name { get; }
+    }
+
+    public sealed class EventInfo<TEventArgs> : EventInfo
+    {
+        public EventInfo(string eventName, TEventArgs? eventArgs) : base(eventName)
+            => EventArgs = eventArgs;
+
+        public TEventArgs? EventArgs { get; }
     }
 
     private static class EventHandlerFactory
@@ -149,17 +175,24 @@ public static class RenderedComponentExtensions
 
         private static readonly object Receiver = new ();
 
-        public static EventCallback<T> CreateEventCallback<T>(EventInfo eventInfo)
-            => EventCallbackFactory.Create(Receiver, new Action<T>(_ => eventInfo.IsEventFired = true));
-
-        public static EventCallback CreateEventCallback(EventInfo eventInfo)
+        public static EventCallback CreateEventCallbackHandler(EventInfo eventInfo)
             => EventCallbackFactory.Create(Receiver, () => eventInfo.IsEventFired = true);
 
-        public static Func<T, Task> CreateEventFunc<T>(EventInfo eventInfo)
+        public static EventCallback<T> CreateEventCallbackHandler1<T>(EventInfo eventInfo)
+            => EventCallbackFactory.Create(Receiver, new Action<T>(_ => eventInfo.IsEventFired = true));
+
+        public static Func<T, Task> CreateEventFuncHandler0<T>(EventInfo eventInfo)
             => _ => {
                 eventInfo.IsEventFired = true;
 
                 return Task.CompletedTask;
+            };
+
+        public static Func<T, ValueTask> CreateEventFuncHandler1<T>(EventInfo eventInfo)
+            => _ => {
+                eventInfo.IsEventFired = true;
+
+                return default;
             };
     }
 }
