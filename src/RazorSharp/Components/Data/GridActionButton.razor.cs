@@ -31,7 +31,7 @@ public partial class GridActionButton<TItem> : GridComponentBase<TItem>
         }
     }
 
-    protected virtual ValueTask OnClickHandlerAsync(GridRow<TItem> row, GridCellContext<TItem> context)
+    protected virtual ValueTask OnClickAsync(GridRow<TItem> row, GridCellActionContext<TItem> context)
         => ValueTask.CompletedTask;
 
     protected override void OnInitialized()
@@ -48,9 +48,9 @@ public partial class GridActionButton<TItem> : GridComponentBase<TItem>
 
     private async Task OnClickHandlerAsync(MouseEventArgs e)
     {
-        if (CascadingContext.Row is { } row && CascadingContext.Cell is { Context: { } context })
+        if (CascadingContext.Row is { } row && CascadingContext.Cell?.Context is GridCellActionContext<TItem> context)
         {
-            await OnClickHandlerAsync(row, context);
+            await OnClickAsync(row, context);
         }
         else
         {

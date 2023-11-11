@@ -33,7 +33,7 @@
 
 @code {
 
-    private IEnumerable<GridCellContext<TItem>?> EnumerateCells(TItem? item)
+    private IEnumerable<object?> EnumerateCells(TItem? item)
     {
         var itemType = typeof(TItem);
         var itemProps = itemType.GetProperties();
@@ -46,10 +46,15 @@
 
                 if (column is { Actions: { } actions })
                 {
-                    yield return new GridCellContext<TItem>(column, item, i, actions.Items);
+                    yield return new GridCellActionContext<TItem>(column, item, actions.Items);
                 }
 
-                yield return new GridCellContext<TItem>(column, item, i, itemProps);
+                var property = itemProps.ElementAtOrDefault(i);
+
+                if (property is not null)
+                {
+                    yield return new GridCellDataContext<TItem>(column, item, property);
+                }
             }
             else
             {
@@ -59,28 +64,11 @@
     }
 
     private RenderFragment RenderGridRow(TItem? item)
-    {
-        if (RowTemplate is not null)
-        {
-            GridCellContext<TItem>?[]? cells = null;
-            var cellIndex = 0;
+        => RowTemplate is not null
+            ? RowTemplate(new(item, EnumerateCells(item)))
+            : RenderDynamicGridRow(item);
 
-            foreach (var context in EnumerateCells(item))
-            {
-                if (context is not null)
-                {
-                    cells ??= new GridCellContext<TItem>[CascadingContext.Grid.Columns.Count];
-                    cells[cellIndex++] = context;
-                }
-            }
-
-            return RowTemplate(new(item, cells));
-        }
-
-        return RenderDefaultGridRow(item);
-    }
-
-    private RenderFragment RenderDefaultGridRow(TItem? item)
+    private RenderFragment RenderDynamicGridRow(TItem? item)
     {
         GridRow<TItem>? gridRow = null!;
 
@@ -89,7 +77,7 @@
                    @{
                        foreach (var context in EnumerateCells(item))
                        {
-                           if (context is { Actions: { } actions })
+                           if (context is GridCellActionContext<TItem> { Actions: { } actions })
                            {
                                <GridCell TItem="TItem" Context="context">
                                    @if (gridRow is not null)
@@ -101,7 +89,7 @@
                                    }
                                </GridCell>
                            }
-                           else if (context is { OriginalContent: { } content })
+                           else if (context is GridCellDataContext<TItem> { OriginalValue: { } content })
                            {
                                <GridCell TItem="TItem" Context="context">
                                    @content

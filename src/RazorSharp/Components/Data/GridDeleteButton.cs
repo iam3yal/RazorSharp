@@ -9,7 +9,7 @@ public sealed class GridDeleteButton<TItem> : GridActionButton<TItem>
     [Parameter]
     public Func<TItem, ValueTask<bool>>? OnDelete { get; set; }
 
-    protected override async ValueTask OnClickHandlerAsync(GridRow<TItem> row, GridCellContext<TItem> context)
+    protected override async ValueTask OnClickAsync(GridRow<TItem> row, GridCellActionContext<TItem> context)
     {
         if (OnDelete is not null && context.Item is { } item)
         {

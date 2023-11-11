@@ -19,6 +19,12 @@ public sealed partial class GridRows<TItem> : GridComponentBase<TItem>
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
+    public Func<GridRow<TItem>, GridCell<TItem>, ValueTask>? OnCellCreated { get; set; }
+
+    [Parameter]
+    public Func<GridRow<TItem>, ValueTask>? OnRowCreated { get; set; }
+
+    [Parameter]
     public RenderFragment<GridRowTemplateContext<TItem>>? RowTemplate { get; set; }
 
     [Inject]

@@ -6,9 +6,9 @@
 
 <CascadingValue Name="Cell" Value="@(this)" IsFixed="true">
     <td>
-        @if (Context is not null && CascadingContext.Row is { EditState: GridEditState.Write })
+        @if (Context is GridCellDataContext<TItem> context && CascadingContext.Row is { EditState: GridEditState.Write })
         {
-            switch (Context.OriginalContent)
+            switch (context.OriginalValue)
             {
                 case string s:
                 {
@@ -74,100 +74,9 @@
 
     private void OnChangeHandlerAsync(ChangeEventArgs args)
     {
-        if (CascadingContext.Row is { } row && Context is { } context)
+        if (CascadingContext.Row is { } row && Context is GridCellDataContext<TItem> context)
         {
-            switch (args.Value)
-            {
-                case bool @bool:
-                {
-                    context.CurrentContent = @bool;
-                    break;
-                }
-                default:
-                {
-                    var value = args.Value as string ?? "";
-
-                    switch (context.OriginalContent)
-                    {
-                        case string:
-                        {
-                            context.CurrentContent = value;
-                            break;
-                        }
-                        case int:
-                        {
-                            if (int.TryParse(value, out var result))
-                            {
-                                context.CurrentContent = result;
-                            }
-
-                            break;
-                        }
-                        case float:
-                        {
-                            if (float.TryParse(value, out var result))
-                            {
-                                context.CurrentContent = result;
-                            }
-
-                            break;
-                        }
-                        case double:
-                        {
-                            if (double.TryParse(value, out var result))
-                            {
-                                context.CurrentContent = result;
-                            }
-
-                            break;
-                        }
-                        case char:
-                        {
-                            if (char.TryParse(value, out var result))
-                            {
-                                context.CurrentContent = result;
-                            }
-
-                            break;
-                        }
-                        case byte:
-                        {
-                            if (byte.TryParse(value, out var result))
-                            {
-                                context.CurrentContent = result;
-                            }
-
-                            break;
-                        }
-                        case long:
-                        {
-                            if (long.TryParse(value, out var result))
-                            {
-                                context.CurrentContent = result;
-                            }
-
-                            break;
-                        }
-                        case short:
-                        {
-                            if (short.TryParse(value, out var result))
-                            {
-                                context.CurrentContent = result;
-                            }
-
-                            break;
-                        }
-                        default:
-                        {
-                            throw new InvalidOperationException("The type is not yet supported.");
-                        }
-                    }
-
-                    break;
-                }
-            }
-
-            CascadingContext.Grid.CellChangeManager.Track(row, context);
+            row.Edit(context, args.Value);
         }
     }
 

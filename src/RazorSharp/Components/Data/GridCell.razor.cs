@@ -7,5 +7,15 @@ public sealed partial class GridCell<TItem> : GridComponentBase<TItem>
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public GridCellContext<TItem>? Context { get; set; }
+    public object? Context { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if (CascadingContext is { Rows.OnCellCreated: { } onCellCreated, Row: { } row })
+        {
+            await onCellCreated(row, this);
+        }
+    }
 }
