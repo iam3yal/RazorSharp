@@ -1,5 +1,7 @@
 namespace RazorSharp.Components.Data;
 
+using System.ComponentModel;
+
 public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
     where TItem : class
 {
@@ -17,6 +19,14 @@ public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
 
     public async ValueTask ChangeEditStateAsync(GridEditState editState)
     {
+        EditState = editState switch
+        {
+            GridEditState.Read => GridEditState.Read,
+            GridEditState.Write => GridEditState.Write,
+            GridEditState.None => GridEditState.None,
+            _ => throw new InvalidEnumArgumentException(nameof(editState), (int) editState, typeof(GridEditState))
+        };
+
         EditState = editState;
 
         await InvokeAsync(StateHasChanged);
