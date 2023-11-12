@@ -8,12 +8,12 @@ public sealed class GridCellChangeManager<TItem>
     private readonly List<GridCellDataContext<TItem>> _cells = new ();
     private readonly HashSet<GridRow<TItem>> _rows = new ();
 
-    public bool EditRowCell(GridRow<TItem>? row, GridCellDataContext<TItem>? context, object? changedValue)
+    public bool EditRowCell(GridRow<TItem>? row, GridCellDataContext<TItem>? context, object? newValue)
     {
         Precondition.IsNotNull(row);
         Precondition.IsNotNull(context);
 
-        if (context.Edit(changedValue))
+        if (context.Edit(newValue))
         {
             if (!_rows.TryGetValue(row, out var existingRow))
             {
