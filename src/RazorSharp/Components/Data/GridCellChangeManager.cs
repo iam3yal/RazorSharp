@@ -31,8 +31,6 @@ public sealed class GridCellChangeManager<TItem>
                 _cells.Add(context);
             }
 
-            // TODO: We may need to do an update here when rows are moved or when there is discrepancy here. 
-
             return true;
         }
 
