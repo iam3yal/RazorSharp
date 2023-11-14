@@ -8,7 +8,7 @@
         <GridColumn>Id</GridColumn>
         <GridColumn>
             <ActionTemplate>
-                <GridEditButton TItem="Person" OnEdit="@EditHandler" />
+                <GridEditButton TItem="Person" OnEdit="@EditHandlerAsync" />
             </ActionTemplate>
         </GridColumn>
         <GridColumn>First Name</GridColumn>
@@ -43,7 +43,7 @@
 
 @code {
 
-    public async ValueTask EditHandler(Person item)
+    public async ValueTask EditHandlerAsync(Person item)
     {
         Console.WriteLine($"Clicked at #{item.Id}");
 

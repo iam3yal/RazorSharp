@@ -14,7 +14,7 @@
     <div style="text-align: left">
         Search:
         <TextBox
-            OnDebounce="@DebounceHandler"
+            OnDebounce="@DebounceHandlerAsync"
             Placeholder="e.g. country:colombia;age:77 or colombia"
             style="width: 20rem" />
         @if (_people?.Length > 0)
@@ -121,7 +121,7 @@
     protected override void OnInitialized()
         => _http = ClientFactory.CreateClient("ApiServer");
 
-    private async Task DebounceHandler(ChangeEventArgs args)
+    private async Task DebounceHandlerAsync(ChangeEventArgs args)
     {
         var value = args.Value as string;
 

@@ -29,8 +29,8 @@
     OnChange="@ChangeHandler"
     style="width: 5rem" />
 
-<Button OnClick="@SetFocusHandler">Set Focus</Button>
-<Button OnClick="@RemoveFocusHandler">Remove Focus</Button>
+<Button OnClick="@SetFocusHandlerAsync">Set Focus</Button>
+<Button OnClick="@RemoveFocusHandlerAsync">Remove Focus</Button>
 
 <h3>ValueChanged Only</h3>
 
@@ -61,10 +61,10 @@
     [NotNull]
     private TextBox? Input { get; set; }
 
-    private async Task SetFocusHandler()
+    private async Task SetFocusHandlerAsync()
         => await Input.FocusAsync();
 
-    private async Task RemoveFocusHandler()
+    private async Task RemoveFocusHandlerAsync()
         => await Input.BlurAsync();
 
     private void ChangeHandler(ChangeEventArgs args)

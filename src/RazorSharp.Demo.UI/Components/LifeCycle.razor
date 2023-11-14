@@ -9,7 +9,7 @@
     <p>@message</p>
 }
 
-<button @onclick="RerenderViewHandler">Rerender View</button>
+<button @onclick="RerenderViewHandlerAsync">Rerender View</button>
 
 @code {
 
@@ -85,6 +85,7 @@
         return (MarkupString) "";
     }
 
-    private async Task RerenderViewHandler()
+    private async Task RerenderViewHandlerAsync()
         => await InvokeAsync(StateHasChanged);
+
 }

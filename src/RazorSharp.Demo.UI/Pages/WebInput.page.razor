@@ -8,18 +8,18 @@
 
 <br />
 
-<Button OnClick="@ClearHandler">Clear</Button>
+<Button OnClick="@ClearHandlerAsync">Clear</Button>
 
-<Button OnClick="@ResetHandler">Reset</Button>
+<Button OnClick="@ResetHandlerAsync">Reset</Button>
 
 @code {
 
     private WebInput<string> _input = null!;
 
-    private async Task ClearHandler()
+    private async Task ClearHandlerAsync()
         => await _input.ClearAsync();
 
-    private async Task ResetHandler()
+    private async Task ResetHandlerAsync()
         => await _input.ResetAsync();
 
 }
