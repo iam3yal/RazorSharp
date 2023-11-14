@@ -2,7 +2,7 @@ namespace RazorSharp.Demo.Data.Models;
 
 using System.Text.Json.Serialization;
 
-public sealed class Product
+public sealed record Product
 {
     public required string Brand { get; init; }
 

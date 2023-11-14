@@ -38,14 +38,7 @@ public sealed class ProductsDbContext : DbContext
 
         foreach (var product in products)
         {
-            Add(new Product
-            {
-                Name = product.Name,
-                Description = product.Description,
-                Brand = product.Brand,
-                Price = Random.Shared.Next(1, 1_000_000),
-                Quantity = Random.Shared.Next(100)
-            });
+            Add(product with { Price = Random.Shared.Next(1, 1_000_000), Quantity = Random.Shared.Next(100) });
         }
 
         SaveChanges();
