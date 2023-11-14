@@ -10,6 +10,9 @@ public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
 
     public GridEditState EditState { get; private set; } = GridEditState.Read;
 
+    [Parameter]
+    public TItem? Item { get; set; }
+
     public async ValueTask CancelEditAsync()
     {
         CascadingContext.Grid.CellChangeManager.RemoveRow(this);

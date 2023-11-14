@@ -33,77 +33,9 @@
 
 @code {
 
-    private IEnumerable<object?> EnumerateCells(TItem? item)
-    {
-        var itemType = typeof(TItem);
-        var itemProps = itemType.GetProperties();
-
-        for (var i = 0; i < CascadingContext.Grid.Columns.Count; i++)
-        {
-            if (item is not null)
-            {
-                var column = CascadingContext.Grid.Columns[i];
-
-                if (column is { Actions: { } actions })
-                {
-                    yield return new GridCellActionContext<TItem>(column, item, actions.Items);
-                }
-
-                var property = itemProps.ElementAtOrDefault(i);
-
-                if (property is not null)
-                {
-                    yield return new GridCellDataContext<TItem>(column, item, property);
-                }
-            }
-            else
-            {
-                yield return null;
-            }
-        }
-    }
-
     private RenderFragment RenderGridRow(TItem? item)
         => RowTemplate is not null
-            ? RowTemplate(new(item, EnumerateCells(item)))
-            : RenderDynamicGridRow(item);
-
-    private RenderFragment RenderDynamicGridRow(TItem? item)
-    {
-        GridRow<TItem>? gridRow = null!;
-
-        return @<GridRow TItem="TItem" @ref="gridRow" @key="item">
-                   @* ReSharper disable once ConvertIfStatementToSwitchStatement *@
-                   @{
-                       foreach (var context in EnumerateCells(item))
-                       {
-                           if (context is GridCellActionContext<TItem> { Actions: { } actions })
-                           {
-                               <GridCell TItem="TItem" Context="context">
-                                   @if (gridRow is not null)
-                                   {
-                                       foreach (var action in actions.Where(x => x.EditState == gridRow.EditState))
-                                       {
-                                           <DynamicComponent Type="action.GetType()" Parameters="@action.Parameters" />
-                                       }
-                                   }
-                               </GridCell>
-                           }
-                           else if (context is GridCellDataContext<TItem> { OriginalValue: { } content })
-                           {
-                               <GridCell TItem="TItem" Context="context">
-                                   @content
-                               </GridCell>
-                           }
-                           else
-                           {
-                               <GridCell TItem="TItem" Context="context">
-                                   &nbsp;
-                               </GridCell>
-                           }
-                       }
-                   }
-               </GridRow>;
-    }
+            ? RowTemplate(item)
+            : @<GridRow TItem="TItem" Item="item" @key="item" />;
 
 }

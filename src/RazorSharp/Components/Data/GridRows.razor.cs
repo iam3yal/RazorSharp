@@ -25,7 +25,7 @@ public sealed partial class GridRows<TItem> : GridComponentBase<TItem>
     public Func<GridRow<TItem>, ValueTask>? OnRowCreated { get; set; }
 
     [Parameter]
-    public RenderFragment<GridRowTemplateContext<TItem>>? RowTemplate { get; set; }
+    public RenderFragment<TItem?>? RowTemplate { get; set; }
 
     [Inject]
     private IServiceProvider Services { get; set; } = default!;
