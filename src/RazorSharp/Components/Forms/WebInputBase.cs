@@ -216,7 +216,7 @@ public abstract class WebInputBase<TValue> : WebElementBase, IFormInput<TValue>
         builder.AddEvent(106, "oninvalid", this, OnInvalidHandlerAsync);
         builder.AddEvent(107, "onactivate", this, OnActivateHandlerAsync);
         builder.AddEvent(108, "onbeforeactivate", this, OnBeforeActivateHandlerAsync);
-        builder.AddEvent(109, "ondeactivate", this, DeactivateHandler);
+        builder.AddEvent(109, "ondeactivate", this, OnDeactivateHandlerAsync);
         builder.AddEvent(110, "onbeforedeactivate", this, OnBeforeDeactivateHandlerAsync);
 
         builder.AddEvent<FocusEventArgs>(111, "onfocus", this, OnFocusHandlerAsync);
@@ -254,14 +254,6 @@ public abstract class WebInputBase<TValue> : WebElementBase, IFormInput<TValue>
                             Culture);
 
             builder.SetUpdatesAttributeName("value");
-        }
-    }
-
-    protected virtual async Task DeactivateHandler()
-    {
-        if (OnDeactivate.HasDelegate)
-        {
-            await OnDeactivate.InvokeAsync();
         }
     }
 
@@ -312,6 +304,14 @@ public abstract class WebInputBase<TValue> : WebElementBase, IFormInput<TValue>
         if (OnChange.HasDelegate)
         {
             await OnChange.InvokeAsync(args);
+        }
+    }
+
+    protected virtual async Task OnDeactivateHandlerAsync()
+    {
+        if (OnDeactivate.HasDelegate)
+        {
+            await OnDeactivate.InvokeAsync();
         }
     }
 
