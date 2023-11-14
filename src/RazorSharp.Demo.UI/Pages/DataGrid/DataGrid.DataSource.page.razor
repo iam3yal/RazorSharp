@@ -1,8 +1,7 @@
 @page "/DataGrid/DataSource"
-@inject ProductsDbContext DbContext
 @using RazorSharp.Demo.Data.EntityFramework.Repositories
 @using RazorSharp.Components.Data
-@implements IAsyncDisposable
+@inject ProductsDbContext DbContext
 
 <PageTitle>DataGrid \ DataSource</PageTitle>
 
@@ -19,9 +18,3 @@
     </GridColumns>
     <GridRows />
 </DataGrid>
-
-@code
-{
-    public async ValueTask DisposeAsync()
-        => await DbContext.DisposeAsync();
-}
