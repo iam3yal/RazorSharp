@@ -1,5 +1,6 @@
 namespace RazorSharp.Core.Contracts;
 
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
@@ -7,6 +8,16 @@ public static class Precondition
 {
     private const string CannotBeEmptyMessage = "Value cannot be empty.";
     private const string NotWithinRangeMessage = "Specified argument was out of the range of valid values.";
+
+    public static void IsDefined<TEnum>(TEnum value,
+                                        [CallerArgumentExpression("value")] string paramName = "")
+        where TEnum : Enum
+    {
+        if (!Enum.IsDefined(typeof(TEnum), value))
+        {
+            throw new InvalidEnumArgumentException(paramName, Unsafe.As<TEnum, int>(ref value), typeof(TEnum));
+        }
+    }
 
     public static void IsInRange(bool condition,
                                  [CallerArgumentExpression("condition")] string paramExp = "")
