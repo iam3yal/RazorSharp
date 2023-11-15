@@ -6,19 +6,18 @@
 
 @switch (Target)
 {
-    case WebElementBase {Id: var id}:
+    case WebElementBase {Id: { } id}:
+    {
         <label for="@id">@ChildContent</label>
         break;
+    }
     case string id:
+    {
         <label for="@id">@ChildContent</label>
         break;
+    }
     default:
     {
-        if (Target is not null)
-        {
-            throw new InvalidOperationException($"The property '{nameof(Target)}' does not support the type '{Target.GetType()}'.");
-        }
-
         <label>@ChildContent</label>
 
         break;
