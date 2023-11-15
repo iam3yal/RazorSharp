@@ -5,6 +5,7 @@ using System.Collections;
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 using RazorSharp.Framework;
+using RazorSharp.Framework.Contracts;
 
 public sealed partial class GridRows<TItem> : GridComponentBase<TItem>
     where TItem : class
@@ -17,6 +18,9 @@ public sealed partial class GridRows<TItem> : GridComponentBase<TItem>
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public GridEditState EditState { get; set; } = GridEditState.Read;
 
     [Parameter]
     public Func<GridRow<TItem>, GridCell<TItem>, ValueTask>? OnCellCreated { get; set; }
@@ -35,6 +39,9 @@ public sealed partial class GridRows<TItem> : GridComponentBase<TItem>
         CascadingContext.Grid.OnRefresh -= RefreshDataAsync;
         CascadingContext.Grid.OnRefresh += RefreshDataAsync;
     }
+
+    protected override void OnParametersSet()
+        => ParameterInvariant.IsDefined(EditState);
 
     protected override async Task OnParametersSetAsync()
     {

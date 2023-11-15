@@ -1,6 +1,7 @@
 namespace RazorSharp.Components.Data;
 
-using System.ComponentModel;
+using RazorSharp.Core.Contracts;
+using RazorSharp.Framework.Contracts;
 
 public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
     where TItem : class
@@ -8,7 +9,8 @@ public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
-    public GridEditState EditState { get; private set; } = GridEditState.Read;
+    [Parameter]
+    public GridEditState EditState { get; set; } = GridEditState.Read;
 
     [Parameter]
     public TItem? Item { get; set; }
@@ -22,13 +24,7 @@ public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
 
     public async ValueTask ChangeEditStateAsync(GridEditState editState)
     {
-        EditState = editState switch
-        {
-            GridEditState.Read => GridEditState.Read,
-            GridEditState.Write => GridEditState.Write,
-            GridEditState.None => GridEditState.None,
-            _ => throw new InvalidEnumArgumentException(nameof(editState), (int) editState, typeof(GridEditState))
-        };
+        Precondition.IsDefined(editState);
 
         EditState = editState;
 
@@ -43,11 +39,13 @@ public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
 
     public async ValueTask ToggleEditStateAsync(GridEditState editState)
     {
+        Precondition.IsDefined(editState);
+
         EditState = editState switch
         {
-            GridEditState.Read => GridEditState.Write,
+            GridEditState.Read                        => GridEditState.Write,
             GridEditState.Write or GridEditState.None => GridEditState.Read,
-            _ => throw new InvalidEnumArgumentException(nameof(editState), (int) editState, typeof(GridEditState))
+            _                                         => editState
         };
 
         await InvokeAsync(StateHasChanged);
@@ -62,4 +60,7 @@ public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
             await onRowCreated(this);
         }
     }
+
+    protected override void OnParametersSet()
+        => ParameterInvariant.IsDefined(EditState);
 }
