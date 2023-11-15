@@ -36,6 +36,9 @@
     private RenderFragment RenderGridRow(TItem? item)
         => RowTemplate is not null
             ? RowTemplate(item)
-            : @<GridRow TItem="TItem" Item="item" @key="item" />;
+            : @<GridRow TItem="TItem"
+                        Item="item"
+                        EditState="EditState"
+                        @key="item" />;
 
 }
