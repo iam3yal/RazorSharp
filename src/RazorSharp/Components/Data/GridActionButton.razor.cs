@@ -2,12 +2,24 @@ namespace RazorSharp.Components.Data;
 
 using Microsoft.AspNetCore.Components.Web;
 
-public partial class GridActionButton<TItem> : GridComponentBase<TItem>
+using RazorSharp.Core.Contracts;
+using RazorSharp.Framework.Contracts;
+
+public abstract partial class GridActionButton<TItem> : GridComponentBase<TItem>
     where TItem : class
 {
     private bool _isTemplate;
 
-    public GridEditState EditState { get; protected set; } = GridEditState.None;
+    protected GridActionButton(string name, GridEditState editState)
+    {
+        Precondition.IsNotEmpty(name);
+        Precondition.IsDefined(editState);
+
+        Name = name;
+        EditState = editState;
+    }
+
+    public GridEditState EditState { get; private set; }
 
     [Parameter]
     public string? Name { get; set; }
@@ -45,6 +57,9 @@ public partial class GridActionButton<TItem> : GridComponentBase<TItem>
             _isTemplate = true;
         }
     }
+
+    protected override void OnParametersSet()
+        => ParameterInvariant.IsNotEmpty(Name);
 
     private async Task OnClickHandlerAsync(MouseEventArgs e)
     {

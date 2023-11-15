@@ -4,8 +4,9 @@ namespace RazorSharp.Components.Data;
 public sealed class GridEditButton<TItem> : GridActionButton<TItem>
     where TItem : class
 {
-    public GridEditButton()
-        => (Name, EditState) = ("Edit", GridEditState.Read);
+    public GridEditButton() : base("Edit", GridEditState.Read)
+    {
+    }
 
     [Parameter]
     public Func<TItem, ValueTask>? OnEdit { get; set; }
