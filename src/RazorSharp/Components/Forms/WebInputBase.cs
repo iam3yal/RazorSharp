@@ -159,7 +159,6 @@ public abstract class WebInputBase<TValue> : WebElementBase, IFormInput<TValue>
         await InvokeAsync(StateHasChanged);
     }
 
-    // REF: https://github.com/dotnet/aspnetcore/blob/v7.0.9/src/Components/Web/src/Forms/InputBase.cs#L174
     public override Task SetParametersAsync(ParameterView parameters)
     {
         parameters.SetParameterProperties(this);
@@ -405,7 +404,6 @@ public abstract class WebInputBase<TValue> : WebElementBase, IFormInput<TValue>
         result = default!;
         validationErrorMessage = null;
 
-        // REF: https://github.com/dotnet/aspnetcore/blob/v7.0.9/src/Components/Web/src/Forms/InputBase.cs#L96
         if (_isGenericUnderlyingTypeNullable && string.IsNullOrEmpty(value))
         {
             return true;
@@ -449,18 +447,15 @@ public abstract class WebInputBase<TValue> : WebElementBase, IFormInput<TValue>
         {
             validationFailed = true;
 
-            // REF: https://github.com/dotnet/aspnetcore/blob/v7.0.9/src/Components/Web/src/Forms/InputBase.cs#L113
             if (EditContext is not null)
             {
                 _validationMessages ??= new ValidationMessageStore(EditContext);
                 _validationMessages.Add(FieldIdentifier, validationErrorMessage);
 
-                // REF: https://github.com/dotnet/aspnetcore/blob/v7.0.9/src/Components/Web/src/Forms/InputBase.cs#L119
                 EditContext.NotifyFieldChanged(FieldIdentifier);
             }
         }
 
-        // REF: https://github.com/dotnet/aspnetcore/blob/v7.0.9/src/Components/Web/src/Forms/InputBase.cs#L124
         if (validationFailed || _previousValidationAttemptFailed)
         {
             EditContext?.NotifyValidationStateChanged();

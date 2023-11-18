@@ -11,7 +11,6 @@ using RazorSharp.Framework.Events;
 using RazorSharp.JSInterop.Wrappers;
 using RazorSharp.Tests.TestDoubles.Fakes;
 
-// REF: https://github.com/dotnet/aspnetcore/blob/v7.0.9/src/Components/Web/test/Forms/InputBaseTest.cs#L513
 [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
 public class TestableWebInput<TValue> : WebInputBase<TValue>
 {
