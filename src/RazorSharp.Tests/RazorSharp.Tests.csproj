@@ -19,7 +19,7 @@
         <None Remove="NUnit" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="bunit" Version="1.24.10" />
+        <PackageReference Include="bunit" Version="1.25.3" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
         <PackageReference Include="xunit" Version="2.5.3" />
     </ItemGroup>
