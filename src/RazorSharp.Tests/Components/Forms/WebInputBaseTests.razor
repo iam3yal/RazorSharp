@@ -1,0 +1,775 @@
+@using System.Diagnostics.CodeAnalysis
+@using AngleSharp.Diffing.Extensions
+@using Microsoft.AspNetCore.Components.Forms
+@using RazorSharp.Dom.Input
+@using RazorSharp.Tests.Kit._Bunit
+@using RazorSharp.Tests.TestDoubles.Fakes
+@using RazorSharp.Tests.TestDoubles.Testables
+@inherits TestContext
+
+@code {
+
+    [Fact]
+    public void Should_combine_existing_css_classes_with_field_class()
+    {
+        var model = new FakeModel();
+
+        TestableWebInput<string> webInputRef = null!;
+
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
+                                            <TestableWebInput
+                                                @ref="webInputRef"
+                                                class="my-class other-class"
+                                                ValueExpression="() => model.StringProperty" />
+                                        </FakeFormHost>);
+
+        var oldCssClass = webInputRef.MergedClass;
+
+        var fieldIdentifier = FieldIdentifier.Create(() => model.StringProperty);
+
+        host.Instance.EditContext!.NotifyFieldChanged(fieldIdentifier);
+
+        host.Render();
+
+        Assert.Multiple(() => Assert.Equal("my-class other-class valid", oldCssClass),
+                        () => Assert.Equal("my-class other-class modified valid", webInputRef.MergedClass));
+    }
+
+    [Fact]
+    public void Should_expose_EditContext_to_subclass()
+    {
+        var model = new FakeModel();
+
+        TestableWebInput<string> webInputRef = null!;
+
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
+                                            <TestableWebInput
+                                                @ref="webInputRef"
+                                                Value="@("foo")"
+                                                ValueExpression="() => model.StringProperty" />
+                                        </FakeFormHost>);
+
+        Assert.Same(host.Instance.EditContext, webInputRef.EditContext);
+    }
+
+    [Fact]
+    public void Should_expose_FieldIdentifier_to_subclass()
+    {
+        var model = new FakeModel();
+
+        TestableWebInput<string> webInputRef = null!;
+
+        Render(@<FakeFormHost EditContext="@(new(model))">
+                   <TestableWebInput
+                       @ref="webInputRef"
+                       Value="@("foo")"
+                       ValueExpression="() => model.StringProperty" />
+               </FakeFormHost>);
+
+        var fieldIdentifier = FieldIdentifier.Create(() => model.StringProperty);
+
+        Assert.Equal(fieldIdentifier, webInputRef.FieldIdentifier);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnActivate_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnActivate, "input");
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnBeforeActivate_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnBeforeActivate, "input");
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnBeforeDeactivate_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnBeforeDeactivate, "input");
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnBlur_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnBlur, "input");
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnChange_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnChange, "input", true);
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnDeactivate_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnDeactivate, "input");
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnDebounce_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnDebounce, "input", true);
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnFocus_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnFocus, "input");
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnFocusIn_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnFocusIn, "input");
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnFocusOut_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnFocusOut, "input");
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnInput_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnInput, "input", true);
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_OnInvalid_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.OnInvalid, "input");
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_ValueChanged_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.ValueChanged, "input", true);
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public async Task Should_fire_ValueChanged_event_when_the_value_was_changed()
+    {
+        var value = "foo";
+
+        var webInput = Render<TestableWebInput<string>>(@<TestableWebInput @bind-Value="value" />);
+
+        var textInputElement = webInput.Find("input");
+
+        var wasValueChangedFiredAfterFirstRender = value != "foo";
+
+        await textInputElement.ChangeAsync(new() { Value = "bar" });
+
+        Assert.Multiple(() => Assert.False(wasValueChangedFiredAfterFirstRender),
+                        () => Assert.Equal("bar", webInput.Instance.Value));
+    }
+
+    [Fact]
+    public async Task Should_fire_ValueChanged_event_when_the_value_was_parsed_successfully()
+    {
+        var model = new FakeModel();
+
+        TestableDateInput dateInputRef = null!;
+
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
+                                            <TestableDateInput
+                                                @ref="dateInputRef"
+                                                ValueChanged="@(newValue => model.DateProperty = newValue)"
+                                                ValueExpression="() => model.DateProperty" />
+                                        </FakeFormHost>);
+
+        var dateInputElement = host.Find("input");
+
+        var fieldIdentifier = FieldIdentifier.Create(() => model.DateProperty);
+
+        var validationStateChangesCounter = 0;
+
+        host.Instance.EditContext!.OnValidationStateChanged += (_, _) => { validationStateChangesCounter++; };
+
+        await dateInputElement.ChangeAsync(new ChangeEventArgs { Value = "1991/11/20" });
+
+        Assert.Multiple(() => Assert.Equal(1991, model.DateProperty.Year),
+                        () => Assert.Equal(11, model.DateProperty.Month),
+                        () => Assert.Equal(20, model.DateProperty.Day),
+                        () => Assert.True(host.Instance.EditContext.IsModified(fieldIdentifier)),
+                        () => Assert.Empty(host.Instance.EditContext.GetValidationMessages(fieldIdentifier)),
+                        () => Assert.Equal(0, validationStateChangesCounter));
+    }
+
+    [Fact]
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+    public async Task Should_fire_ValueChanged_event_when_the_value_was_parsed_unsuccessfully()
+    {
+        var model = new FakeModel();
+
+        TestableDateInput dateInputRef = null!;
+
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
+                                            <TestableDateInput
+                                                @ref="dateInputRef"
+                                                ValueChanged="@(newValue => model.DateProperty = newValue)"
+                                                ValueExpression="() => model.DateProperty" />
+                                        </FakeFormHost>);
+
+        var dateInputElement = host.Find("input");
+
+        var fieldIdentifier = FieldIdentifier.Create(() => model.DateProperty);
+
+        var currentValidationStateChangesCounter = 0;
+
+        host.Instance.EditContext!.OnValidationStateChanged += (_, _) => { currentValidationStateChangesCounter++; };
+
+        await dateInputElement.ChangeAsync(new ChangeEventArgs { Value = "1991/11/40" });
+
+        var wasValueChanged = model.DateProperty != default;
+        var wasFieldModified = host.Instance.EditContext.IsModified(fieldIdentifier);
+        var oldValidationMessage = host.Instance.EditContext.GetValidationMessages(fieldIdentifier).Single();
+        var oldValidationStateChangesCounter = currentValidationStateChangesCounter;
+
+        await dateInputElement.ChangeAsync(new ChangeEventArgs { Value = "1991/11/20" });
+
+        Assert.Multiple(TransitionToInvalid()
+                            .Concat(TransitionToValid())
+                            .ToArray());
+
+        IEnumerable<Action> TransitionToInvalid()
+        {
+            yield return () => Assert.False(wasValueChanged);
+            yield return () => Assert.True(wasFieldModified);
+            yield return () => Assert.Equal("Bad date value", oldValidationMessage);
+            yield return () => Assert.Equal(1, oldValidationStateChangesCounter);
+        }
+
+        IEnumerable<Action> TransitionToValid()
+        {
+            yield return () => Assert.Equal(1991, model.DateProperty.Year);
+            yield return () => Assert.Equal(11, model.DateProperty.Month);
+            yield return () => Assert.Equal(20, model.DateProperty.Day);
+            yield return () => Assert.True(host.Instance.EditContext.IsModified(fieldIdentifier));
+            yield return () => Assert.Empty(host.Instance.EditContext.GetValidationMessages(fieldIdentifier));
+            yield return () => Assert.Equal(2, currentValidationStateChangesCounter);
+        }
+    }
+
+    [Fact]
+    public async Task Should_fire_ValueChanging_event()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo = await webInput.BindAndFireEvent(c => c.ValueChanging, "input", true);
+
+        Assert.True(eventInfo.IsEventFired);
+    }
+
+    [Fact]
+    public void Should_format_the_value_according_to_supplied_formatting()
+    {
+        var dateInput = Render<TestableDateInput>(@<TestableDateInput
+                                                       @* ReSharper disable once ArrangeRedundantParentheses *@
+                                                       Value="@(new DateTime(1915, 3, 2))"
+                                                       Format="@("yyyy/MM/dd")" />);
+
+        Assert.Equal("1915/03/02", dateInput.Instance.ValueAsString);
+    }
+
+    [Fact]
+    public void Should_match_css_class_to_the_corresponding_field_state()
+    {
+        var model = new FakeModel();
+
+        TestableWebInput<string> webInputRef = null!;
+
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
+                                            <TestableWebInput
+                                                @ref="webInputRef"
+                                                ValueExpression="() => model.StringProperty" />
+                                        </FakeFormHost>);
+
+        var fieldIdentifier = FieldIdentifier.Create(() => model.StringProperty);
+
+        var initialCssClassValue = webInputRef.MergedClass;
+        host.Instance.EditContext!.NotifyFieldChanged(fieldIdentifier);
+        host.Render();
+
+        var modifiedCssClassValue = webInputRef.MergedClass;
+        var messages = new ValidationMessageStore(host.Instance.EditContext);
+        messages.Add(fieldIdentifier, "foo");
+        host.Render();
+
+        var invalidCssClassValue = webInputRef.MergedClass;
+        host.Instance.EditContext.MarkAsUnmodified(fieldIdentifier);
+        host.Render();
+
+        var unmodifiedCssClassValue = webInputRef.MergedClass;
+        messages.Clear();
+        host.Render();
+
+        var validCssClassValue = webInputRef.MergedClass;
+
+        Assert.Multiple(() => Assert.Equal("valid", initialCssClassValue),
+                        () => Assert.Equal("modified valid", modifiedCssClassValue),
+                        () => Assert.Equal("modified invalid", invalidCssClassValue),
+                        () => Assert.Equal("invalid", unmodifiedCssClassValue),
+                        () => Assert.Equal("valid", validCssClassValue));
+    }
+
+    [Fact]
+    public async Task Should_not_fire_ValueChanged_event_when_OnChange_is_set()
+    {
+        var webInputComp = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo1 = await webInputComp.BindAndFireEvent(c => c.OnChange, "input", true);
+        var eventInfo2 = await webInputComp.BindAndFireEvent(c => c.ValueChanged, "input", true);
+
+        Assert.Multiple(() => Assert.True(eventInfo1.IsEventFired),
+                        () => Assert.False(eventInfo2.IsEventFired));
+    }
+
+    [Fact]
+    public async Task Should_not_fire_ValueChanged_event_when_the_value_is_unchanged()
+    {
+        var model = new FakeModel();
+
+        // ReSharper disable once ConvertToConstant.Local
+        var value = "foo";
+        var wasValueChangedFired = false;
+
+        var host = Render(@<FakeFormHost EditContext="@(new(model))">
+                              <TestableWebInput
+                                  TValue="string"
+                                  Value="value"
+                                  ValueChanged="@(_ => wasValueChangedFired = true)"
+                                  ValueExpression="() => model.StringProperty" />
+                          </FakeFormHost>);
+
+        var textInputElement = host.Find("input");
+
+        await textInputElement.ChangeAsync(new ChangeEventArgs { Value = "foo" });
+
+        Assert.Multiple(() => Assert.False(wasValueChangedFired),
+                        () => Assert.Equal("foo", value));
+    }
+
+    [Fact]
+    public async Task Should_not_fire_ValueChanging_event_when_OnInput_is_set()
+    {
+        var webInputComp = RenderComponent<TestableWebInput<string>>();
+
+        var eventInfo1 = await webInputComp.BindAndFireEvent(c => c.OnInput, "input", true);
+        var eventInfo2 = await webInputComp.BindAndFireEvent(c => c.ValueChanging, "input", true);
+
+        Assert.Multiple(() => Assert.True(eventInfo1.IsEventFired),
+                        () => Assert.False(eventInfo2.IsEventFired));
+    }
+
+    [Fact]
+    public void Should_not_render_with_disabled_when_Disabled_is_false()
+    {
+        var webInput = Render(@<TestableWebInput
+                                   TValue="string"
+                                   IsDisabled="false" />);
+
+        var element = webInput.Find("input");
+        var disabled = element.HasAttribute("disabled");
+
+        Assert.False(disabled);
+    }
+
+    [Fact]
+    public async Task Should_notify_EditContext_when_value_changed()
+    {
+        var model = new FakeModel();
+
+        TestableWebInput<string> webInputRef = null!;
+
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
+                                            <TestableWebInput
+                                                TValue="string"
+                                                @ref="webInputRef"
+                                                Value="@("foo")"
+                                                ValueChanged="_ => { }"
+                                                ValueExpression="() => model.StringProperty" />
+                                        </FakeFormHost>);
+
+        var textInputElement = host.Find("input");
+
+        var wasFieldModified = host.Instance.EditContext!.IsModified(() => model.StringProperty);
+
+        await textInputElement.ChangeAsync(new ChangeEventArgs { Value = "bar" });
+
+        Assert.Multiple(() => Assert.False(wasFieldModified),
+                        () => Assert.True(host.Instance.EditContext!.IsModified(() => model.StringProperty)));
+    }
+
+    [Fact]
+    public void Should_render_with_disabled_when_Disabled_is_true()
+    {
+        var webInput = Render(@<TestableWebInput
+                                   TValue="string"
+                                   IsDisabled="true" />);
+
+        var element = webInput.Find("input");
+        var disabled = element.HasAttribute("disabled");
+
+        Assert.True(disabled);
+    }
+
+    [Fact]
+    public void Should_render_with_the_default_type_when_no_type_is_specified()
+    {
+        var webInput = RenderComponent<TestableWebInput<string>>();
+
+        Assert.Equal("text", ((IFormInput<string>) webInput.Instance).Type);
+    }
+
+    [Fact]
+    public void Should_render_with_the_value_assigned_to_Form()
+    {
+        var webInput = Render(@<TestableWebInput
+                                   TValue="string"
+                                   Form="@("form1")" />);
+
+        var textInputElement = webInput.Find("input");
+        var form = textInputElement.GetAttribute("form");
+
+        Assert.Equal("form1", form);
+    }
+
+    [Fact]
+    public void Should_render_with_the_value_assigned_to_Name()
+    {
+        var webInput = Render(@<TestableWebInput
+                                   TValue="string"
+                                   Name="@("foo")" />);
+
+        var textInputElement = webInput.Find("input");
+        var name = textInputElement.GetAttribute("name");
+
+        Assert.Equal("foo", name);
+    }
+
+    [Fact]
+    public void Should_render_with_the_value_assigned_to_Title()
+    {
+        var webInput = Render(@<TestableWebInput
+                                   TValue="string"
+                                   Title="@("foo")" />);
+
+        var textInputElement = webInput.Find("input");
+        var title = textInputElement.GetAttribute("title");
+
+        Assert.Equal("foo", title);
+    }
+
+    [Fact]
+    public void Should_render_with_the_value_assigned_to_Value()
+    {
+        var webInput = Render(@<TestableWebInput
+                                   TValue="string"
+                                   Value="@("foo")" />);
+
+        var textInputElement = webInput.Find("input");
+        var value = textInputElement.GetAttribute("value");
+
+        Assert.Equal("foo", value);
+    }
+
+    [Fact]
+    public void Should_render_with_the_value_assigned_to_Value_as_empty_when_null_is_passed()
+    {
+        var webInput = Render(@<TestableWebInput
+                                   TValue="string"
+                                   Value="@(null)" />);
+
+        var textInputElement = webInput.Find("input");
+        var value = textInputElement.GetAttribute("value");
+
+        Assert.Equal("", value);
+    }
+
+    [Fact]
+    public void Should_render_without_EditContext()
+    {
+        // ReSharper disable once ConvertToConstant.Local
+        var value = "foo";
+
+        TestableWebInput<string> webInputRef = null!;
+
+        Render<FakeFormHost>(@<FakeFormHost>
+                                 <TestableWebInput
+                                     @ref="webInputRef"
+                                     Value="value"
+                                     ValueExpression="() => value" />
+                             </FakeFormHost>);
+
+        Assert.Null(webInputRef.EditContext);
+    }
+
+    [Fact]
+    [SuppressMessage("ReSharper", "InlineTemporaryVariable")]
+    public async Task Should_respond_to_changes()
+    {
+        var value = "foo";
+
+        TestableWebInput<string> webInputRef = null!;
+
+        var host = Render<FakeFormHost>(@<FakeFormHost>
+                                            <TestableWebInput
+                                                TValue="string"
+                                                @ref="webInputRef"
+                                                Value="value"
+                                                ValueChanged="newValue => value = newValue"
+                                                ValueExpression="() => value" />
+                                        </FakeFormHost>);
+
+        var oldValue = value;
+
+        var textInputElement = host.Find("input");
+        await textInputElement.ChangeAsync(new ChangeEventArgs { Value = "bar" });
+
+        Assert.Multiple(() => Assert.Equal("foo", oldValue),
+                        () => Assert.Equal("bar", value));
+    }
+
+    [Fact]
+    public async Task Should_respond_to_validation_state_change_notifications()
+    {
+        var model = new FakeModel();
+
+        TestableWebInput<string> webInputRef = null!;
+
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
+                                            <TestableWebInput
+                                                @ref="webInputRef"
+                                                ValueExpression="() => model.StringProperty" />
+                                        </FakeFormHost>);
+
+        var fieldIdentifier = FieldIdentifier.Create(() => model.StringProperty);
+
+        var messageStore = new ValidationMessageStore(host.Instance.EditContext!);
+        messageStore.Add(fieldIdentifier, "foo");
+        await host.InvokeAsync(host.Instance.EditContext!.NotifyValidationStateChanged);
+
+        Assert.Equal(1, webInputRef.ValidationStateChangedCounter);
+    }
+
+    [Fact]
+    [SuppressMessage("Usage", "BL0005:Component parameter should not be set outside of its component.")]
+    public void Should_throw_when_EditContext_changes()
+    {
+        var model = new FakeModel();
+
+        TestableWebInput<string> webInputRef = null!;
+
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
+                                            <TestableWebInput
+                                                @ref="webInputRef"
+                                                ValueExpression="() => model.StringProperty" />
+                                        </FakeFormHost>);
+
+        var ex = Record.Exception(() => {
+            host.Instance.EditContext = new(model);
+            host.Render();
+        });
+
+        Assert.Multiple(() => Assert.NotNull(ex),
+                        () => Assert.StartsWith(
+                            $"The type '{typeof(TestableWebInput<string>)}' does not support changing the 'EditContext' parameter dynamically.",
+                            ex?.Message));
+    }
+
+    [Fact]
+    public void Should_throw_when_no_ValueExpression_is_supplied()
+    {
+        var ex = Record.Exception(() => {
+            var model = new FakeModel();
+
+            Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
+                                     <TestableWebInput TValue="string" />
+                                 </FakeFormHost>);
+        });
+
+        Assert.Multiple(() => Assert.NotNull(ex),
+                        () => Assert.StartsWith(
+                            $"The type '{typeof(TestableWebInput<string>)}' requires a value for the 'ValueExpression' parameter. Normally this is provided automatically when using 'bind-Value'.",
+                            ex?.Message));
+    }
+
+    [Fact]
+    public async Task Should_unsubscribe_from_validation_state_change_notifications()
+    {
+        var model = new FakeModel();
+
+        TestableWebInput<string> webInputRef = null!;
+
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
+                                            <TestableWebInput
+                                                @ref="webInputRef"
+                                                ValueExpression="() => model.StringProperty" />
+                                        </FakeFormHost>);
+
+        var fieldIdentifier = FieldIdentifier.Create(() => model.StringProperty);
+
+        await webInputRef.DisposeAsync();
+
+        var messageStore = new ValidationMessageStore(host.Instance.EditContext!);
+        messageStore.Add(fieldIdentifier, "foo");
+        await host.InvokeAsync(host.Instance.EditContext!.NotifyValidationStateChanged);
+
+        Assert.Equal(0, webInputRef.ValidationStateChangedCounter);
+    }
+
+    public sealed class ClearAsync : TestContext
+    {
+        public ClearAsync()
+            => JSInterop.Mode = JSRuntimeMode.Loose;
+
+        [Fact]
+        public async Task Should_clear_input_element()
+        {
+            var webInput = Render<TestableWebInput<string>>(@<TestableWebInput Value="@("foo")" />);
+
+            var textInputElement = webInput.Find("input");
+
+            textInputElement.TryGetAttrValue("value", out string oldValue);
+
+            await webInput.Instance.ClearAsync();
+
+            textInputElement.TryGetAttrValue("value", out string newValue);
+
+            Assert.Multiple(() => Assert.Equal("foo", oldValue),
+                            () => Assert.Equal("", newValue));
+        }
+
+        [Fact]
+        public async Task Should_rerender_component_when_Value_is_binded_and_cleared()
+        {
+            var value = "foo";
+
+            var webInput = Render<TestableWebInput<string>>(@<TestableWebInput @bind-Value="value" />);
+
+            await webInput.Instance.ClearAsync();
+
+            Assert.Equal(2, webInput.RenderCount);
+        }
+
+        [Fact]
+        public async Task Should_set_Value_to_default()
+        {
+            var webInput = Render<TestableWebInput<string>>(@<TestableWebInput Value="@("foo")" />);
+
+            await webInput.Instance.ClearAsync();
+
+            Assert.Equal(default, webInput.Instance.Value);
+        }
+    }
+
+    public sealed class ResetAsync : TestContext
+    {
+        public ResetAsync()
+            => JSInterop.Mode = JSRuntimeMode.Loose;
+
+        [Fact]
+        public async Task Should_rerender_component_when_Value_is_binded_and_reset()
+        {
+            var value = "foo";
+
+            var webInput = Render<TestableWebInput<string>>(@<TestableWebInput @bind-Value="value" />);
+
+            await webInput.Instance.ResetAsync();
+
+            Assert.Equal(2, webInput.RenderCount);
+        }
+
+        [Fact]
+        public async Task Should_reset_input_element_to_original_value()
+        {
+            var webInput = Render<TestableWebInput<string>>(@<TestableWebInput Value="@("foo")" />);
+
+            var textInputElement = webInput.Find("input");
+
+            webInput.SetParametersAndRender(parameters => { parameters.Add(p => p.Value, "bar"); });
+
+            textInputElement.TryGetAttrValue("value", out string newValue);
+
+            await webInput.Instance.ResetAsync();
+
+            textInputElement.TryGetAttrValue("value", out string oldValue);
+
+            Assert.Multiple(() => Assert.Equal("foo", oldValue),
+                            () => Assert.Equal("bar", newValue));
+        }
+
+        [Fact]
+        public async Task Should_reset_Value_to_original_value()
+        {
+            var webInput = Render<TestableWebInput<string>>(@<TestableWebInput Value="@("foo")" />);
+
+            webInput.SetParametersAndRender(parameters => { parameters.Add(p => p.Value, "bar"); });
+
+            var newValue = webInput.Instance.Value;
+
+            await webInput.Instance.ResetAsync();
+
+            var oldValue = webInput.Instance.Value;
+
+            Assert.Multiple(() => Assert.Equal("bar", newValue),
+                            () => Assert.Equal("foo", oldValue));
+        }
+    }
+
+}

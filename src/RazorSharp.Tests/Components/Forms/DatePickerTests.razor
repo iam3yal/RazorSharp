@@ -1,0 +1,81 @@
+@using RazorSharp.Dom.Input.Formats
+@inherits TestContext
+
+@code {
+
+    [Theory]
+    [InlineData(DateFormat.Date, "date")]
+    [InlineData(DateFormat.Month, "month")]
+    [InlineData(DateFormat.Week, "week")]
+    public void Should_render_input_with_matched_type(DateFormat format, string type)
+    {
+        var datePicker = Render(@<DatePicker Format="format" />);
+
+        var inputElement = datePicker.Find("input");
+        var value = inputElement.GetAttribute("type");
+
+        Assert.Equal(type, value);
+    }
+
+    [Fact]
+    public void Should_render_with_Date_format()
+    {
+        var datePicker = Render(@<DatePicker
+                                     @* ReSharper disable once ArrangeRedundantParentheses *@
+                                     Value="@(new DateOnly(2018, 07, 22))"
+                                     Format="DateFormat.Date" />);
+
+        var inputElement = datePicker.Find("input");
+        var value = inputElement.GetAttribute("value");
+
+        Assert.Equal("2018-07-22", value);
+    }
+
+    [Fact]
+    public void Should_render_with_Month_format()
+    {
+        var datePicker = Render(@<DatePicker
+                                     @* ReSharper disable once ArrangeRedundantParentheses *@
+                                     Value="@(new DateOnly(2018, 03, 01))"
+                                     Format="DateFormat.Month" />);
+
+        var inputElement = datePicker.Find("input");
+        var value = inputElement.GetAttribute("value");
+
+        Assert.Equal("2018-03", value);
+    }
+
+    [Fact]
+    public async Task Should_render_with_Week_format()
+    {
+        var value = new DateOnly(2018, 06, 25);
+
+        var datePicker = Render(@<DatePicker
+                                     @* ReSharper disable once ArrangeRedundantParentheses *@
+                                     @bind-Value="value"
+                                     Format="DateFormat.Week" />);
+
+        var inputElement = datePicker.Find("input");
+        await inputElement.ChangeAsync(new ChangeEventArgs { Value = "2017-W26" });
+        var changedValue = inputElement.GetAttribute("value");
+
+        Assert.Equal("2017-W26", changedValue);
+    }
+
+    [Fact]
+    public void Should_throw_when_invalid_Format_is_provided()
+    {
+        var ex = Record.Exception(() => {
+            Render(@<DatePicker
+                        @* ReSharper disable once ArrangeRedundantParentheses *@
+                        Value="@(new DateOnly(2018, 06, 12))"
+                        Format="(DateFormat) 0" />);
+        });
+
+        Assert.Multiple(() => Assert.IsType<InvalidOperationException>(ex),
+                        () => Assert.StartsWith(
+                            $"The '{nameof(DatePicker.Format)}' parameter was assigned with an invalid value.",
+                            ex?.Message));
+    }
+
+}

@@ -146,11 +146,6 @@ public static class RenderedComponentExtensions
         return eventInfo;
     }
 
-    public static IRenderedComponent<TChildComponent> GetChildComponent<TValue, TChildComponent>(
-        this IRenderedComponent<RazorSharpTestContext.FakeHostComponent<TValue, TChildComponent>> hostComponent)
-        where TChildComponent : IComponent
-        => hostComponent.FindComponent<TChildComponent>();
-
     public class EventInfo
     {
         public EventInfo(string eventName)
@@ -159,14 +154,6 @@ public static class RenderedComponentExtensions
         public bool IsEventFired { get; internal set; }
 
         public string Name { get; }
-    }
-
-    public sealed class EventInfo<TEventArgs> : EventInfo
-    {
-        public EventInfo(string eventName, TEventArgs? eventArgs) : base(eventName)
-            => EventArgs = eventArgs;
-
-        public TEventArgs? EventArgs { get; }
     }
 
     private static class EventHandlerFactory

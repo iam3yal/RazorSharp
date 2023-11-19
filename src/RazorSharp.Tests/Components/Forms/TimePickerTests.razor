@@ -1,0 +1,28 @@
+@inherits TestContext
+
+@code {
+
+    [Fact]
+    public void Should_render_input_with_matched_type()
+    {
+        var timePicker = Render(@<TimePicker />);
+
+        var timeInputElement = timePicker.Find("input");
+        var value = timeInputElement.GetAttribute("type");
+
+        Assert.Equal("time", value);
+    }
+
+    [Fact]
+    public void Should_render_with_Time_format()
+    {
+        @* ReSharper disable once ArrangeRedundantParentheses *@
+        var timePicker = Render(@<TimePicker Value="@(new TimeOnly(9, 0, 0))" />);
+
+        var timeInputElement = timePicker.Find("input");
+        var value = timeInputElement.GetAttribute("value");
+
+        Assert.Equal("09:00:00", value);
+    }
+
+}

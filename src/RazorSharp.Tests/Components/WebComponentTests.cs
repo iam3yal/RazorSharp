@@ -1,70 +1,57 @@
 ﻿namespace RazorSharp.Components;
 
-using RazorSharp.Tests.Kit;
-
-public static class WebComponentTests
+public sealed class WebComponentTests
 {
-    public static class Dispose
+    public class Dispose : TestContext
     {
         [Fact]
-        public static void Should_never_throw_on_subsequent_calls()
+        public void Should_never_throw_on_subsequent_calls()
         {
-            using var ctx = new RazorSharpTestContext();
-
-            var webInput = ctx.RenderComponent<WebComponent>()
-                              .Instance;
+            var webInputRef = RenderComponent<WebComponent>().Instance;
 
             var ex = Record.Exception(() => {
-                ((IDisposable) webInput).Dispose();
-                ((IDisposable) webInput).Dispose();
+                ((IDisposable) webInputRef).Dispose();
+                ((IDisposable) webInputRef).Dispose();
             });
 
             Assert.Null(ex);
         }
 
         [Fact]
-        public static void Should_not_set_IsDisposed_to_true()
+        public void Should_not_set_IsDisposed_to_true()
         {
-            using var ctx = new RazorSharpTestContext();
+            var webInputRef = RenderComponent<WebComponent>().Instance;
 
-            var webInput = ctx.RenderComponent<WebComponent>()
-                              .Instance;
+            ((IDisposable) webInputRef).Dispose();
 
-            ((IDisposable) webInput).Dispose();
-
-            Assert.False(webInput.IsDisposed);
+            Assert.False(webInputRef.IsDisposed);
         }
     }
 
-    public static class DisposeAsync
+    public class DisposeAsync : TestContext
+
     {
         [Fact]
-        public static async Task Should_never_throw_on_subsequent_calls()
+        public async Task Should_never_throw_on_subsequent_calls()
         {
-            using var ctx = new RazorSharpTestContext();
-
-            var webInput = ctx.RenderComponent<WebComponent>()
-                              .Instance;
+            var webInputRef = RenderComponent<WebComponent>().Instance;
 
             var ex = await Record.ExceptionAsync(async () => {
-                await webInput.DisposeAsync();
-                await webInput.DisposeAsync();
+                await webInputRef.DisposeAsync();
+                await webInputRef.DisposeAsync();
             });
 
             Assert.Null(ex);
         }
 
         [Fact]
-        public static async Task Should_set_IsDisposed_to_true()
+        public async Task Should_set_IsDisposed_to_true()
         {
-            using var ctx = new RazorSharpTestContext();
+            var webInputRef = RenderComponent<WebComponent>().Instance;
 
-            var webInput = ctx.RenderComponent<WebComponent>()
-                              .Instance;
+            await webInputRef.DisposeAsync();
 
-            await webInput.DisposeAsync();
-
-            Assert.True(webInput.IsDisposed);
+            Assert.True(webInputRef.IsDisposed);
         }
     }
 }

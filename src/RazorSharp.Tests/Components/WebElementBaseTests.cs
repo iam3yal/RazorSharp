@@ -1,53 +1,46 @@
 namespace RazorSharp.Components;
 
 using RazorSharp.Dom;
-using RazorSharp.Tests.Kit;
 using RazorSharp.Tests.TestDoubles.Testables;
 
-public static class WebElementBaseTests
+public sealed class WebElementBaseTests : TestContext
 {
     [Fact]
-    public static void Should_render_with_the_appended_value()
+    public void Should_render_with_the_appended_value()
     {
-        using var ctx = new RazorSharpTestContext();
-
-        var webInputComp = ctx.RenderComponent<TestableWebElement>(parameters => {
+        var webInput = RenderComponent<TestableWebElement>(parameters => {
             parameters.Add(p => p.Class, "foo");
             parameters.Add(p => p.ClassBuilder, new CssClassBuilder().Append("bar"));
         });
 
-        var element = webInputComp.Find("div");
-        var cssClass = element.GetAttribute("class");
+        var divElement = webInput.Find("div");
+        var cssClass = divElement.GetAttribute("class");
 
         Assert.Equal("foo bar", cssClass);
     }
 
     [Fact]
-    public static void Should_render_with_the_value_assigned_to_Class()
+    public void Should_render_with_the_value_assigned_to_Class()
     {
-        using var ctx = new RazorSharpTestContext();
-
-        var webInputComp = ctx.RenderComponent<TestableWebElement>(parameters => {
+        var webInput = RenderComponent<TestableWebElement>(parameters => {
             parameters.Add(p => p.Class, "foo");
         });
 
-        var element = webInputComp.Find("div");
-        var cssClass = element.GetAttribute("class");
+        var divElement = webInput.Find("div");
+        var cssClass = divElement.GetAttribute("class");
 
         Assert.Equal("foo", cssClass);
     }
 
     [Fact]
-    public static void Should_render_with_the_value_assigned_to_Id()
+    public void Should_render_with_the_value_assigned_to_Id()
     {
-        using var ctx = new RazorSharpTestContext();
-
-        var webInputComp = ctx.RenderComponent<TestableWebElement>(parameters => {
+        var webInput = RenderComponent<TestableWebElement>(parameters => {
             parameters.Add(p => p.Id, "foo");
         });
 
-        var element = webInputComp.Find("div");
-        var cssClass = element.GetAttribute("id");
+        var divElement = webInput.Find("div");
+        var cssClass = divElement.GetAttribute("id");
 
         Assert.Equal("foo", cssClass);
     }

@@ -1,0 +1,110 @@
+@using RazorSharp.Dom.Input.Formats
+@inherits TestContext
+
+@code {
+
+    [Theory]
+    [InlineData(DateTimeFormat.DateTime, "datetime-local")]
+    [InlineData(DateTimeFormat.Date, "date")]
+    [InlineData(DateTimeFormat.Month, "month")]
+    [InlineData(DateTimeFormat.Week, "week")]
+    [InlineData(DateTimeFormat.Time, "time")]
+    public void Should_render_input_with_matched_type(DateTimeFormat format, string type)
+    {
+        var datetimePicker = Render(@<DateTimePicker Format="format" />);
+
+        var inputElement = datetimePicker.Find("input");
+        var value = inputElement.GetAttribute("type");
+
+        Assert.Equal(type, value);
+    }
+
+    [Fact]
+    public void Should_render_with_Date_format()
+    {
+        var datetimePicker = Render(@<DateTimePicker
+                                         @* ReSharper disable once ArrangeRedundantParentheses *@
+                                         Value="@(new DateTime(2018, 07, 22))"
+                                         Format="DateTimeFormat.Date" />);
+
+        var inputElement = datetimePicker.Find("input");
+        var value = inputElement.GetAttribute("value");
+
+        Assert.Equal("2018-07-22", value);
+    }
+
+    [Fact]
+    public void Should_render_with_DateTime_format()
+    {
+        var datetimePicker = Render(@<DateTimePicker
+                                         @* ReSharper disable once ArrangeRedundantParentheses *@
+                                         Value="@(new DateTime(2018, 06, 12, 19, 30, 0))"
+                                         Format="DateTimeFormat.DateTime" />);
+
+        var inputElement = datetimePicker.Find("input");
+        var value = inputElement.GetAttribute("value");
+
+        Assert.Equal("2018-06-12T19:30:00", value);
+    }
+
+    [Fact]
+    public void Should_render_with_Month_format()
+    {
+        var datetimePicker = Render(@<DateTimePicker
+                                         @* ReSharper disable once ArrangeRedundantParentheses *@
+                                         Value="@(new DateTime(2018, 03, 01))"
+                                         Format="DateTimeFormat.Month" />);
+
+        var inputElement = datetimePicker.Find("input");
+        var value = inputElement.GetAttribute("value");
+
+        Assert.Equal("2018-03", value);
+    }
+
+    [Fact]
+    public void Should_render_with_Time_format()
+    {
+        var datetimePicker = Render(@<DateTimePicker
+                                         @* ReSharper disable once ArrangeRedundantParentheses *@
+                                         Value="@(new DateTime(1, 1, 1, 9, 0, 0))"
+                                         Format="DateTimeFormat.Time" />);
+
+        var inputElement = datetimePicker.Find("input");
+        var value = inputElement.GetAttribute("value");
+
+        Assert.Equal("09:00:00", value);
+    }
+
+    [Fact]
+    public async Task Should_render_with_Week_format()
+    {
+        var value = new DateTime(2018, 06, 25);
+
+        var datetimePicker = Render(@<DateTimePicker
+                                         @bind-Value="value"
+                                         Format="DateTimeFormat.Week" />);
+
+        var inputElement = datetimePicker.Find("input");
+        await inputElement.ChangeAsync(new ChangeEventArgs { Value = "2017-W26" });
+        var changedValue = inputElement.GetAttribute("value");
+
+        Assert.Equal("2017-W26", changedValue);
+    }
+
+    [Fact]
+    public void Should_throw_when_invalid_Format_is_provided()
+    {
+        var ex = Record.Exception(() => {
+            Render(@<DateTimePicker
+                        @* ReSharper disable once ArrangeRedundantParentheses *@
+                        Value="@(new DateTime(2018, 06, 12, 19, 30, 0))"
+                        Format="(DateTimeFormat) 0" />);
+        });
+
+        Assert.Multiple(() => Assert.IsType<InvalidOperationException>(ex),
+                        () => Assert.StartsWith(
+                            $"The '{nameof(DateTimePicker.Format)}' parameter was assigned with an invalid value.",
+                            ex?.Message));
+    }
+
+}
