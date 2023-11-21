@@ -1,27 +1,29 @@
 @using Microsoft.AspNetCore.Components.Web
 @using RazorSharp.Components.Data
 @using RazorSharp.Tests.TestDoubles.Fakes
+@inherits TestContext
+
 @code {
 
     [Fact]
     public async Task Should_save_the_new_value()
     {
-        var data = new List<FakePerson>() { new() { Name = "Foo" } };
+        var data = new List<FakePerson> { new() { Name = "John Doe" } };
 
-        var component = _ctx.Render(@<DataGrid Items="data">
-                                        <GridColumns>
-                                            <GridColumn>Name</GridColumn>
-                                            <GridColumn>
-                                                <ActionTemplate>
-                                                    <GridSaveButton OnSave="@OnSaveHandlerAsync" />
-                                                </ActionTemplate>
-                                            </GridColumn>
-                                        </GridColumns>
-                                        <GridRows TItem="FakePerson" EditState="GridEditState.Write" />
-                                    </DataGrid>);
+        var component = Render(@<DataGrid Items="data">
+                                   <GridColumns>
+                                       <GridColumn>Name</GridColumn>
+                                       <GridColumn>
+                                           <ActionTemplate>
+                                               <GridSaveButton OnSave="@OnSaveHandlerAsync" />
+                                           </ActionTemplate>
+                                       </GridColumn>
+                                   </GridColumns>
+                                   <GridRows TItem="FakePerson" EditState="GridEditState.Write" />
+                               </DataGrid>);
 
         var textInput = component.Find("input[type='text']");
-        await textInput.InputAsync(new ChangeEventArgs { Value = "Bar" });
+        await textInput.InputAsync(new ChangeEventArgs { Value = "John Smith" });
 
         var saveButton = component.Find("button");
         await saveButton.ClickAsync(new MouseEventArgs());
@@ -29,6 +31,31 @@
         Assert.Multiple(() => Assert.NotNull(_args),
                         () => Assert.True(_args!.IsSaved),
                         () => Assert.Equal(GridEditState.Read, _args!.RowEditState));
+    }
+
+    [Fact]
+    public async Task Should_not_save_the_new_value_when_is_not_changed()
+    {
+        var data = new List<FakePerson> { new() { Name = "John Doe" } };
+
+        var component = Render(@<DataGrid Items="data">
+                                   <GridColumns>
+                                       <GridColumn>Name</GridColumn>
+                                       <GridColumn>
+                                           <ActionTemplate>
+                                               <GridSaveButton OnSave="@OnSaveHandlerAsync" />
+                                           </ActionTemplate>
+                                       </GridColumn>
+                                   </GridColumns>
+                                   <GridRows TItem="FakePerson" EditState="GridEditState.Write" />
+                               </DataGrid>);
+
+        var saveButton = component.Find("button");
+        await saveButton.ClickAsync(new MouseEventArgs());
+
+        Assert.Multiple(() => Assert.NotNull(_args),
+                        () => Assert.False(_args!.IsSaved),
+                        () => Assert.Equal(GridEditState.None, _args!.RowEditState));
     }
 
 }
