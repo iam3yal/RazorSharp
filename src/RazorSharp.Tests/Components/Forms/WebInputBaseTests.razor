@@ -370,10 +370,10 @@
     [Fact]
     public async Task Should_not_fire_ValueChanged_event_when_OnChange_is_set()
     {
-        var webInputComp = RenderComponent<TestableWebInput<string>>();
+        var webInput = RenderComponent<TestableWebInput<string>>();
 
-        var eventInfo1 = await webInputComp.BindAndFireEvent(c => c.OnChange, "input", true);
-        var eventInfo2 = await webInputComp.BindAndFireEvent(c => c.ValueChanged, "input", true);
+        var eventInfo1 = await webInput.BindAndFireEvent(c => c.OnChange, "input", true);
+        var eventInfo2 = await webInput.BindAndFireEvent(c => c.ValueChanged, "input", true);
 
         Assert.Multiple(() => Assert.True(eventInfo1.IsEventFired),
                         () => Assert.False(eventInfo2.IsEventFired));
@@ -407,10 +407,10 @@
     [Fact]
     public async Task Should_not_fire_ValueChanging_event_when_OnInput_is_set()
     {
-        var webInputComp = RenderComponent<TestableWebInput<string>>();
+        var webInput = RenderComponent<TestableWebInput<string>>();
 
-        var eventInfo1 = await webInputComp.BindAndFireEvent(c => c.OnInput, "input", true);
-        var eventInfo2 = await webInputComp.BindAndFireEvent(c => c.ValueChanging, "input", true);
+        var eventInfo1 = await webInput.BindAndFireEvent(c => c.OnInput, "input", true);
+        var eventInfo2 = await webInput.BindAndFireEvent(c => c.ValueChanging, "input", true);
 
         Assert.Multiple(() => Assert.True(eventInfo1.IsEventFired),
                         () => Assert.False(eventInfo2.IsEventFired));
