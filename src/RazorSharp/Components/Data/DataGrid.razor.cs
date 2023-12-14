@@ -2,10 +2,12 @@ namespace RazorSharp.Components.Data;
 
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
+using RazorSharp.Framework.Components.Data;
+
 public sealed partial class DataGrid<TItem> : WebComponent
     where TItem : class
 {
-    public GridCellChangeManager<TItem> CellChangeManager { get; } = new ();
+    public CellChangeManager<TItem> CellChangeManager { get; } = new ();
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

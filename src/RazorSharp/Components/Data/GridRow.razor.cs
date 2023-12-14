@@ -17,7 +17,7 @@ public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
 
     public async ValueTask CancelEditAsync()
     {
-        CascadingContext.Grid.CellChangeManager.RemoveRow(this);
+        CascadingContext.Grid.CellChangeManager.Remove(Item);
 
         await ChangeEditStateAsync(GridEditState.Read);
     }
@@ -32,10 +32,10 @@ public sealed partial class GridRow<TItem> : GridComponentBase<TItem>
     }
 
     public bool Edit(GridCellDataContext<TItem>? context, object? changedValue)
-        => CascadingContext.Grid.CellChangeManager.EditRowCell(this, context, changedValue);
+        => CascadingContext.Grid.CellChangeManager.Edit(context, changedValue);
 
     public bool Save()
-        => CascadingContext.Grid.CellChangeManager.SaveRowChanges(this);
+        => CascadingContext.Grid.CellChangeManager.SaveChanges(Item);
 
     public async ValueTask ToggleEditStateAsync(GridEditState editState)
     {
