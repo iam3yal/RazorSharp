@@ -56,14 +56,14 @@
 
                 if (column is { Actions: { } actions })
                 {
-                    yield return new GridCellActionContext<TItem>(column, item, actions.Items);
+                    yield return new GridCellActionContext<TItem>(item, actions.Items);
                 }
 
                 var property = itemProps.ElementAtOrDefault(i);
 
                 if (property is not null)
                 {
-                    yield return new GridCellDataContext<TItem>(column, item, property);
+                    yield return new GridCellDataContext<TItem>(item, property);
                 }
             }
             else

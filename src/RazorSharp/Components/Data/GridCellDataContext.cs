@@ -3,7 +3,6 @@ namespace RazorSharp.Components.Data;
 using System.Reflection;
 
 using RazorSharp.Core.Contracts;
-using RazorSharp.Framework.Components;
 using RazorSharp.Framework.Components.Data;
 
 public sealed class GridCellDataContext<TItem> : ICellDataContext<TItem>
@@ -11,13 +10,11 @@ public sealed class GridCellDataContext<TItem> : ICellDataContext<TItem>
 {
     private readonly PropertyInfo _property;
 
-    public GridCellDataContext(GridColumn<TItem> column, TItem item, PropertyInfo property)
+    public GridCellDataContext(TItem item, PropertyInfo property)
     {
-        Precondition.IsNotNull(column);
         Precondition.IsNotNull(item);
         Precondition.IsNotNull(property);
 
-        Column = column;
         Item = item;
         _property = property;
 
@@ -25,11 +22,9 @@ public sealed class GridCellDataContext<TItem> : ICellDataContext<TItem>
         CurrentValue = OriginalValue;
     }
 
-    public GridColumn<TItem> Column { get; }
-
     public object? CurrentValue { get; private set; }
 
-    public TItem? Item { get; private set; }
+    public TItem? Item { get; }
 
     public object? OriginalValue { get; private set; }
 
