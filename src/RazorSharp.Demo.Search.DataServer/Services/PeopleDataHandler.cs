@@ -1,4 +1,4 @@
-namespace RazorSharp.Demo.Search.ApiServer.Services;
+namespace RazorSharp.Demo.Search.DataServer.Services;
 
 using System.Collections.Immutable;
 using System.Text;
@@ -11,7 +11,7 @@ using RazorSharp.Demo.Data.Models;
 
 public sealed class PeopleDataHandler : IDataProvider<IReadOnlyDictionary<Person, StringBuilder>>, IDataLoader
 {
-    private const string DataFile = "RazorSharp.Demo.Data.ApiServer.Documents.people.json";
+    private const string DataFile = "RazorSharp.Demo.Search.DataServer.Documents.people.json";
 
     private IReadOnlyDictionary<Person, StringBuilder>? _data;
 

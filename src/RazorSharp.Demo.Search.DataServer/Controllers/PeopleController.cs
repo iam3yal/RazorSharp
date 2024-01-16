@@ -1,4 +1,4 @@
-namespace RazorSharp.Demo.Search.ApiServer.Controllers;
+namespace RazorSharp.Demo.Search.DataServer.Controllers;
 
 using System.Text;
 

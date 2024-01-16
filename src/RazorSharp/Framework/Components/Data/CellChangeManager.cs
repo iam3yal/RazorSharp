@@ -8,6 +8,12 @@ public sealed class CellChangeManager<TItem>
     private readonly List<ICellDataContext<TItem>> _cells = new ();
     private readonly HashSet<TItem?> _items = new ();
 
+    public int TrackedCells
+        => _cells.Count;
+
+    public int TrackedItems
+        => _items.Count;
+
     public bool Edit(ICellDataContext<TItem>? context, object? newValue)
     {
         Precondition.IsNotNull(context);

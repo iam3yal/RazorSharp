@@ -1,4 +1,4 @@
-namespace RazorSharp.Demo.Search.ApiServer.Services;
+namespace RazorSharp.Demo.Search.DataServer.Services;
 
 using System.Collections;
 

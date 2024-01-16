@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <PackageVersion>1.0.0-alpha.1</PackageVersion>
@@ -26,7 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.13" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -41,10 +41,6 @@
     <ItemGroup>
       <Folder Include="wwwroot\" />
     </ItemGroup>
-
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-    </PropertyGroup>
 
     <Target Name="CopyJSFiles" BeforeTargets="BeforeBuild">
         <Message Text="RazorSharp.JSInterop.Scripts: Start copying JavaScript files." Importance="High" />

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
         <RootNamespace>RazorSharp</RootNamespace>
@@ -19,9 +19,9 @@
         <None Remove="NUnit" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="bunit" Version="1.25.3" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
-        <PackageReference Include="xunit" Version="2.5.3" />
+        <PackageReference Include="bunit" Version="1.26.64" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+        <PackageReference Include="xunit" Version="2.6.3" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\RazorSharp.Tests.TestDoubles\RazorSharp.Tests.TestDoubles.csproj" />

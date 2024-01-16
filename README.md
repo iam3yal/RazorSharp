@@ -35,7 +35,7 @@ RazorSharp offers a range of powerful features:
 - [x] Adding unit tests to existing types and components.
 - [x] Adding documentation to existing types and methods.
 - [ ] GitHub Workflows
-- [ ] Move to .NET 8
+- [x] Move to .NET 8
 
 ### Future Plans
 
@@ -50,13 +50,13 @@ RazorSharp offers a range of powerful features:
 
 ## Running Demos from the CLI
 
-#### Installing .NET 7
+#### Installing .NET 8
 
-To get started, you'll need to install the latest version of .NET 7 by following these steps:
+To get started, you'll need to install the latest version of .NET 8 by following these steps:
 
-1. Visit [this link](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) to install the latest version of .NET 7.
+1. Visit [this link](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) to install the latest version of .NET 8.
 2. After installation, open your command prompt or terminal and type the following command to verify that `dotnet` is correctly added to the `PATH` environment.
-3. If the command displays information about .NET 7, it means the installation was successful. You're now ready to proceed with running the RazorSharp demos.
+3. If the command displays information about .NET 8, it means the installation was successful. You're now ready to proceed with running the RazorSharp demos.
 
 #### Building the solution 
 To build the solution navigate to the `src` directory and follow these commands:
@@ -69,7 +69,7 @@ dotnet build
 #### Optional: WebAssembly & Sqlite Support
 To use `Sqlite` with `WebAssembly` you have to install the `wasm-tools` so run these additional commands from the `src` directory:
 ```
-cd RazorSharp.Demo.Blazor.WasmApp
+cd RazorSharp.Demo.Blazor.WasmClient
 sudo dotnet workload restore
 cd ..
 ```
@@ -81,28 +81,22 @@ dotnet dev-certs https --trust
 ```
 
 #### Running the demo on Blazor Server (Server-Side Rendering)
-To try the blazor server demo (`RazorSharp.Demo.ServerApp`), run the following command:
+To try the blazor server demo (`RazorSharp.Demo.Blazor.ServerApp`), run the following command:
 ```
-dotnet run --project RazorSharp.Demo.ServerApp
+dotnet run --project RazorSharp.Demo.Blazor.ServerApp
 ```
 
 #### Running the demo on Blazor Client (WebAssembly)
-To try the blazor wasm demo (`RazorSharp.Demo.WasmApp`), run the following command:
+To try the blazor wasm demo (`RazorSharp.Demo.Blazor.WasmClient`), run the following command:
 ```
-dotnet run --project RazorSharp.Demo.WasmAppServer
+dotnet run --project RazorSharp.Demo.Blazor.WasmServer
 ```
-* The wasm demo `RazorSharp.Demo.WasmApp` is served to the browser through `RazorSharp.Demo.WasmAppServer`.
+* The wasm demo `RazorSharp.Demo.Blazor.WasmClient` is served to the browser through `RazorSharp.Demo.Blazor.WasmServer`.
   
-#### Running the Data Server for the Search demo
-To run the data server for the Search demo, execute the command below. Afterward, you can run any of the previously mentioned demo projects (`RazorSharp.Demo.ServerApp` or `RazorSharp.Demo.WasmApp`) and click on Playground / Search.
+#### Running the DataServer for the Search demo
+To run the DataServer for the Search demo, execute the command below. Afterward, you can run any of the previously mentioned demo projects (`RazorSharp.Demo.Blazor.ServerApp` or `RazorSharp.Demo.Blazor.WasmClient`) and click on Playground / Search.
 ```
-dotnet run --project RazorSharp.Demo.DataServer
-```
-
-#### Running E2E Tests
-All end-to-end (E2E) tests are implemented using Playwright. To execute these tests, please ensure that you run the following PowerShell script first while in the `src` directory of the project:
-```
-pwsh playwright.ps1 install
+dotnet run --project RazorSharp.Demo.Search.DataServer
 ```
 
 ## Terminating the `dotnet` Process

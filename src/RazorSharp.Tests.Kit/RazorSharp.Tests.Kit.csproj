@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Configurations>Debug;Release;Benchmarks</Configurations>
@@ -14,12 +14,12 @@
         <None Remove="Moq" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="bunit" Version="1.24.10" />
-        <PackageReference Include="bunit.web" Version="1.24.10" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.13" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.13" />
-        <PackageReference Include="Microsoft.Playwright" Version="1.39.0" />
-        <PackageReference Include="Moq" Version="4.20.69" />
+        <PackageReference Include="bunit" Version="1.26.64" />
+        <PackageReference Include="bunit.web" Version="1.26.64" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Playwright" Version="1.40.0" />
+        <PackageReference Include="Moq" Version="4.20.70" />
         <PackageReference Include="xunit.abstractions" Version="2.0.3" />
     </ItemGroup>
     <ItemGroup>
