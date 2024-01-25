@@ -22,6 +22,7 @@ internal static class AsyncQueryExecutorSupplier
     [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2111",
                                   Justification =
                                       "The reflection is a best effort to warn developers about sync-over-async behavior which can cause thread pool starvation.")]
+    [SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
     public static IAsyncQueryExecutor? GetAsyncQueryExecutor<T>(IServiceProvider services, IQueryable<T>? queryable)
     {
         if (queryable is not null)
@@ -58,6 +59,5 @@ internal static class AsyncQueryExecutorSupplier
         => queryableProviderType.GetInterfaces()
                                 .Any(x => string.Equals(
                                          x.FullName, "Microsoft.EntityFrameworkCore.Query.IAsyncQueryProvider",
-                                         StringComparison.Ordinal))
-           == true;
+                                         StringComparison.Ordinal));
 }
