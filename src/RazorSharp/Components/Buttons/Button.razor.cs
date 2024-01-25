@@ -6,12 +6,8 @@ using Microsoft.AspNetCore.Components.Web;
 using RazorSharp.Core.Components.Rendering;
 using RazorSharp.Dom;
 
-public sealed partial class Button : WebElementBase
+public sealed partial class Button() : WebElementBase(Tag.Button)
 {
-    public Button() : base(Tag.Button)
-    {
-    }
-
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 

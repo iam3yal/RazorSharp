@@ -6,12 +6,8 @@ using Microsoft.AspNetCore.Components.Rendering;
 using RazorSharp.Components;
 using RazorSharp.Dom;
 
-public sealed class TestableWebElement : WebElementBase
+public sealed class TestableWebElement() : WebElementBase(Tag.Div)
 {
-    public TestableWebElement() : base(Tag.Div)
-    {
-    }
-
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 

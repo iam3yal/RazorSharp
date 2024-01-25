@@ -1,12 +1,8 @@
 namespace RazorSharp.Components.Data;
 
-public sealed class GridSaveButton<TItem> : GridActionButton<TItem>
+public sealed class GridSaveButton<TItem>() : GridActionButton<TItem>("Save", GridEditState.Write)
     where TItem : class
 {
-    public GridSaveButton() : base("Save", GridEditState.Write)
-    {
-    }
-
     [Parameter]
     public Func<GridSaveButtonEventArgs, ValueTask>? OnSave { get; set; }
 

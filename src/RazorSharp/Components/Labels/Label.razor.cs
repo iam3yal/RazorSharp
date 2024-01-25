@@ -3,12 +3,8 @@
 using RazorSharp.Dom;
 using RazorSharp.Framework;
 
-public sealed partial class Label : WebElementBase
+public sealed partial class Label() : WebElementBase(Tag.Label)
 {
-    public Label() : base(Tag.Label)
-    {
-    }
-
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 

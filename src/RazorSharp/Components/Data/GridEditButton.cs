@@ -1,13 +1,9 @@
 namespace RazorSharp.Components.Data;
 
 [CascadingTypeParameter(nameof(TItem))]
-public sealed class GridEditButton<TItem> : GridActionButton<TItem>
+public sealed class GridEditButton<TItem>() : GridActionButton<TItem>("Edit", GridEditState.Read)
     where TItem : class
 {
-    public GridEditButton() : base("Edit", GridEditState.Read)
-    {
-    }
-
     [Parameter]
     public Func<TItem, ValueTask>? OnEdit { get; set; }
 

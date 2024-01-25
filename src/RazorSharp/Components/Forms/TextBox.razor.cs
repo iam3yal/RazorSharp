@@ -7,12 +7,8 @@ using Microsoft.AspNetCore.Components.Web;
 
 using RazorSharp.Dom.Input;
 
-public partial class TextBox : WebInputBase<string>, ITextInput
+public partial class TextBox() : WebInputBase<string>(CultureInfo.CurrentCulture), ITextInput
 {
-    public TextBox() : base(CultureInfo.CurrentCulture)
-    {
-    }
-
     [Parameter]
     public string? AutoComplete { get; set; }
 

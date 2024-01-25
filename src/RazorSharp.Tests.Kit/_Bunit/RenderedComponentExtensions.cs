@@ -146,14 +146,11 @@ public static class RenderedComponentExtensions
         return eventInfo;
     }
 
-    public class EventInfo
+    public class EventInfo(string eventName)
     {
-        public EventInfo(string eventName)
-            => Name = eventName;
-
         public bool IsEventFired { get; internal set; }
 
-        public string Name { get; }
+        public string Name { get; } = eventName;
     }
 
     private static class EventHandlerFactory

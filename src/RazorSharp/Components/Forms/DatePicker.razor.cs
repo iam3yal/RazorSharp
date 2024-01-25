@@ -7,12 +7,8 @@ using Microsoft.AspNetCore.Components.Rendering;
 using RazorSharp.Dom.Input;
 using RazorSharp.Dom.Input.Formats;
 
-public partial class DatePicker : WebInputBase<DateOnly>
+public partial class DatePicker() : WebInputBase<DateOnly>(CultureInfo.InvariantCulture)
 {
-    public DatePicker() : base(CultureInfo.InvariantCulture)
-    {
-    }
-
     [Parameter]
     public DateFormat Format { get; set; } = DateFormat.Date;
 
@@ -36,7 +32,8 @@ public partial class DatePicker : WebInputBase<DateOnly>
     {
         if (!Enum.IsDefined(Format))
         {
-            throw new InvalidOperationException($"The '{nameof(Format)}' parameter was assigned with an invalid value.");
+            throw new InvalidOperationException(
+                $"The '{nameof(Format)}' parameter was assigned with an invalid value.");
         }
 
         return base.OnParametersSetAsync();

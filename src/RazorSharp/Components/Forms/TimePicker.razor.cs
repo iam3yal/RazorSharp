@@ -7,12 +7,8 @@ using Microsoft.AspNetCore.Components.Rendering;
 using RazorSharp.Dom.Input;
 using RazorSharp.Dom.Input.Formats;
 
-public partial class TimePicker : WebInputBase<TimeOnly>
+public partial class TimePicker() : WebInputBase<TimeOnly>(CultureInfo.InvariantCulture)
 {
-    public TimePicker() : base(CultureInfo.InvariantCulture)
-    {
-    }
-
     protected override void BuildElementRenderTree(RenderTreeBuilder builder)
     {
         Type = InputType.Time;

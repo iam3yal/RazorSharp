@@ -8,12 +8,8 @@ using RazorSharp.Dom.Input;
 using RazorSharp.Dom.Input.Formats;
 
 [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
-public partial class DateTimePicker : WebInputBase<DateTime>
+public partial class DateTimePicker() : WebInputBase<DateTime>(CultureInfo.InvariantCulture)
 {
-    public DateTimePicker() : base(CultureInfo.InvariantCulture)
-    {
-    }
-
     [Parameter]
     public DateTimeFormat Format { get; set; } = DateTimeFormat.DateTime;
 
@@ -39,7 +35,8 @@ public partial class DateTimePicker : WebInputBase<DateTime>
     {
         if (!Enum.IsDefined(Format))
         {
-            throw new InvalidOperationException($"The '{nameof(Format)}' parameter was assigned with an invalid value.");
+            throw new InvalidOperationException(
+                $"The '{nameof(Format)}' parameter was assigned with an invalid value.");
         }
 
         return base.OnParametersSetAsync();

@@ -1,11 +1,8 @@
 namespace RazorSharp.Components.Data;
 
-public sealed class GridSaveButtonEventArgs : EventArgs
+public sealed class GridSaveButtonEventArgs(bool isSaved) : EventArgs
 {
-    public GridSaveButtonEventArgs(bool isSaved)
-        => IsSaved = isSaved;
-
-    public bool IsSaved { get; }
+    public bool IsSaved { get; } = isSaved;
 
     public GridEditState RowEditState { get; internal set; } = GridEditState.None;
 }

@@ -12,14 +12,10 @@ using RazorSharp.JSInterop.Wrappers;
 using RazorSharp.Tests.TestDoubles.Fakes;
 
 [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
-public class TestableWebInput<TValue> : WebInputBase<TValue>
+public class TestableWebInput<TValue>() : WebInputBase<TValue>(CultureInfo.InvariantCulture)
 {
     private static readonly IDebounceable<ChangeEventArgs> FakeDebouncer = new FakeDebouncer<ChangeEventArgs>();
     private static readonly IHtmlElement FakeInput = new FakeHtmlElement();
-
-    public TestableWebInput() : base(CultureInfo.InvariantCulture)
-    {
-    }
 
     public new EditContext? EditContext
         => base.EditContext;

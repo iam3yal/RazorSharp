@@ -1,12 +1,8 @@
 namespace RazorSharp.Components.Data;
 
-public sealed class GridCancelButton<TItem> : GridActionButton<TItem>
+public sealed class GridCancelButton<TItem>() : GridActionButton<TItem>("Cancel", GridEditState.Write)
     where TItem : class
 {
-    public GridCancelButton() : base("Cancel", GridEditState.Write)
-    {
-    }
-
     [Parameter]
     public Func<ValueTask>? OnCancel { get; set; }
 

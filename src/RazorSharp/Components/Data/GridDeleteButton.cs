@@ -1,12 +1,8 @@
 namespace RazorSharp.Components.Data;
 
-public sealed class GridDeleteButton<TItem> : GridActionButton<TItem>
+public sealed class GridDeleteButton<TItem>() : GridActionButton<TItem>("Delete", GridEditState.Read)
     where TItem : class
 {
-    public GridDeleteButton() : base("Delete", GridEditState.Read)
-    {
-    }
-
     [Parameter]
     public Func<TItem, ValueTask<bool>>? OnDelete { get; set; }
 

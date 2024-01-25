@@ -48,11 +48,5 @@ public static class Postcondition
         }
     }
 
-    public sealed class AssertException : Exception
-    {
-        public AssertException(string? message)
-            : base(message)
-        {
-        }
-    }
+    public sealed class AssertException(string? message) : Exception(message);
 }
