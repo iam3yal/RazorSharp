@@ -85,8 +85,11 @@ public sealed partial class GridRows<TItem> : GridComponentBase<TItem>
 
     private async ValueTask RefreshDataAsync()
     {
-        // Move into a "loading" state, cancelling any earlier-but-still-pending load
-        _pendingDataLoadCTS?.Cancel();
+        if (_pendingDataLoadCTS is not null)
+        {
+            // Move into a "loading" state, cancelling any earlier-but-still-pending load
+            await _pendingDataLoadCTS.CancelAsync();
+        }
 
         var pendingDataLoadCTS = _pendingDataLoadCTS = new CancellationTokenSource();
 
