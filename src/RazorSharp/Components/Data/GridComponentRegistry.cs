@@ -4,7 +4,7 @@ using RazorSharp.Core.Contracts;
 
 public sealed class GridComponentRegistry
 {
-    private readonly IDictionary<Type, IComponent> _registry = new Dictionary<Type, IComponent>();
+    private readonly Dictionary<Type, IComponent> _registry = new ();
 
     public void Add<TKey>(IComponent component)
         where TKey : class
