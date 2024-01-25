@@ -28,17 +28,4 @@ public interface IAsyncQueryExecutor
     ///     True if this <see cref="IAsyncQueryExecutor" /> instance can perform asynchronous queries for the supplied <paramref name="queryable" />, otherwise false.
     /// </returns>
     bool IsSupported<T>(IQueryable<T> queryable);
-
-    /// <summary>
-    ///     Asynchronously materializes the <see cref="IQueryable{T}" /> as an array, if supported.
-    /// </summary>
-    /// <typeparam name="T">The data type.</typeparam>
-    /// <param name="queryable">
-    ///     An <see cref="IQueryable{T}" /> instance.
-    /// </param>
-    /// <returns>
-    ///     The items in the <paramref name="queryable" />.
-    /// </returns>
-    /// .
-    Task<T[]> ToArrayAsync<T>(IQueryable<T> queryable);
 }

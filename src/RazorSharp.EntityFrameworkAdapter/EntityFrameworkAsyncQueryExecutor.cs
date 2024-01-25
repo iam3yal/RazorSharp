@@ -12,7 +12,4 @@ internal sealed class EntityFrameworkAsyncQueryExecutor : IAsyncQueryExecutor
 
     public bool IsSupported<T>(IQueryable<T> queryable)
         => queryable.Provider is IAsyncQueryProvider;
-
-    public Task<T[]> ToArrayAsync<T>(IQueryable<T> queryable)
-        => queryable.ToArrayAsync();
 }
