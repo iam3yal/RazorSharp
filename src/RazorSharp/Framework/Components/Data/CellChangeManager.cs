@@ -5,8 +5,8 @@ using RazorSharp.Core.Contracts;
 public sealed class CellChangeManager<TItem>
     where TItem : class
 {
-    private readonly List<ICellDataContext<TItem>> _cells = new ();
-    private readonly HashSet<TItem?> _items = new ();
+    private readonly List<ICellDataContext<TItem>> _cells = [];
+    private readonly HashSet<TItem?> _items = [];
 
     public int TrackedCells
         => _cells.Count;
