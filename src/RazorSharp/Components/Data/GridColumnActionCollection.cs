@@ -5,7 +5,7 @@ using RazorSharp.Core.Contracts;
 public sealed class GridColumnActionCollection<TItem>
     where TItem : class
 {
-    private readonly IList<GridActionButton<TItem>> _actions = new List<GridActionButton<TItem>>();
+    private readonly IList<GridActionButton<TItem>> _actions = [];
 
     private IReadOnlyCollection<GridActionButton<TItem>>? _cachedActions;
 

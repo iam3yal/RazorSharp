@@ -5,7 +5,7 @@ using RazorSharp.Core.Contracts;
 public sealed class GridColumnCollection<TItem>
     where TItem : class
 {
-    private readonly IList<GridColumn<TItem>> _columns = new List<GridColumn<TItem>>();
+    private readonly IList<GridColumn<TItem>> _columns = [];
 
     private int _lastIndex = -1;
 

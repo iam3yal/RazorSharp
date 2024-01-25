@@ -7,7 +7,7 @@ public sealed partial class Fake
     public sealed class FakeBuilder<T>
         where T : class
     {
-        private readonly IList<Action<Mock<T>>> _customizers = new List<Action<Mock<T>>>();
+        private readonly IList<Action<Mock<T>>> _customizers = [];
 
         public T Build()
         {

@@ -80,7 +80,7 @@ public static class RenderedComponentExtensions
             var createMethod = typeof(EventHandlerFactory).GetMethod(methodName);
             var genericCreateMethod = createMethod?.MakeGenericMethod(eventArgType);
 
-            eventHandler = genericCreateMethod?.Invoke(null, new object?[] { eventInfo });
+            eventHandler = genericCreateMethod?.Invoke(null, [eventInfo]);
         }
         else
         {
