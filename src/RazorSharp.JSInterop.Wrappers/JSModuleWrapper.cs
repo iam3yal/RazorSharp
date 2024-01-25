@@ -41,16 +41,14 @@ public abstract class JSModuleWrapper<T> : IJSModuleActivator<T>
     public string Path
         => Module.Path;
 
+    [SuppressMessage("Design", "CA1000:Do not declare static members on generic types",
+                     Justification = "Factory method")]
     public static T Create(JSModuleReference moduleRef, ElementReference elementRef)
     {
         Precondition.IsNotNull(moduleRef);
         Precondition.IsNotEmpty(elementRef.Id);
 
-        return new T
-        {
-            Module = moduleRef,
-            Element = elementRef
-        };
+        return new T { Module = moduleRef, Element = elementRef };
     }
 
     [SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize")]
