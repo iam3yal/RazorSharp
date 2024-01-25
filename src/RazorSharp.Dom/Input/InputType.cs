@@ -1,8 +1,12 @@
 namespace RazorSharp.Dom.Input;
 
+using System.Diagnostics.CodeAnalysis;
+
 using RazorSharp.Core;
 using RazorSharp.Core.Strings;
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public sealed record InputType : TypedString<InputType>, IValueDefaultable<InputType>
 {
     private InputType(string value) : base(value)

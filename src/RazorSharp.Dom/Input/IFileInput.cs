@@ -1,5 +1,9 @@
 namespace RazorSharp.Dom.Input;
 
+using System.Diagnostics.CodeAnalysis;
+
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public interface IFileInput : IFormInput<string>
 {
     /// <summary>

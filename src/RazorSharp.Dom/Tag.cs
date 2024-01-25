@@ -1,7 +1,11 @@
 namespace RazorSharp.Dom;
 
+using System.Diagnostics.CodeAnalysis;
+
 using RazorSharp.Core.Strings;
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public sealed record Tag : TypedString<Tag>
 {
     private Tag(string value) : base(value)

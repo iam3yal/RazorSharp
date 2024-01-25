@@ -1,9 +1,11 @@
 namespace RazorSharp.Core.Runtime.CompilerServices;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
 [InterpolatedStringHandler]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public ref struct InvariantStringHandler
 {
     private DefaultInterpolatedStringHandler _identifier;

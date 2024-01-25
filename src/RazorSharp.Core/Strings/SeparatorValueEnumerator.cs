@@ -2,6 +2,7 @@ namespace RazorSharp.Core.Strings;
 
 using System.Diagnostics.CodeAnalysis;
 
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public ref struct SeparatorValueEnumerator
 {
     private readonly ReadOnlySpan<char> _separator;

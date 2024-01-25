@@ -1,9 +1,12 @@
 ﻿namespace RazorSharp.Dom;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public sealed partial class CssClassBuilder
 {
     private static readonly Regex InvalidChars = InvalidCharsRegex();
@@ -71,7 +74,7 @@ public sealed partial class CssClassBuilder
         return this;
     }
 
-    [GeneratedRegex("[^\\w\\s-]+")]
+    [GeneratedRegex(@"[^\w\s-]+")]
     private static partial Regex InvalidCharsRegex();
 
     [GeneratedRegex("^\\d+")]

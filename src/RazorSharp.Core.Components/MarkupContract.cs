@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 
 using RazorSharp.Core.Contracts;
 
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public static class MarkupContract
 {
     public static MarkupString IsNotEmpty<T>(ReadOnlySpan<T> value,

@@ -1,7 +1,10 @@
 namespace RazorSharp.Dom.Input;
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public static class AutoComplete
 {
     public static AutoCompleteAddress Address { get; } = new ();
@@ -21,6 +24,8 @@ public static class AutoComplete
     public static AutoCompleteWeb Web { get; } = new ();
 }
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 [EditorBrowsable(EditorBrowsableState.Never)]
 public sealed class AutoCompleteAddress
 {
@@ -47,6 +52,8 @@ public sealed class AutoCompleteAddress
     public AutoCompleteValue StreetAddress { get; } = new ("street-address");
 }
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 [EditorBrowsable(EditorBrowsableState.Never)]
 public sealed class AutoCompleteAuth
 {
@@ -59,6 +66,8 @@ public sealed class AutoCompleteAuth
     public AutoCompleteValue Username { get; } = new ("Username");
 }
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 [EditorBrowsable(EditorBrowsableState.Never)]
 public sealed class AutoCompleteBirthday
 {
@@ -71,6 +80,8 @@ public sealed class AutoCompleteBirthday
     public AutoCompleteValue Year { get; } = new ("bday-year");
 }
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 [EditorBrowsable(EditorBrowsableState.Never)]
 public sealed class AutoCompleteCreditCard
 {
@@ -95,6 +106,8 @@ public sealed class AutoCompleteCreditCard
     public AutoCompleteValue Type { get; } = new ("cc-type");
 }
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 [EditorBrowsable(EditorBrowsableState.Never)]
 public sealed class AutoCompletePayment
 {
@@ -108,6 +121,8 @@ public sealed class AutoCompletePayment
     public AutoCompleteValue TransactionCurrency { get; } = new ("transaction-currency");
 }
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 [EditorBrowsable(EditorBrowsableState.Never)]
 public sealed class AutoCompletePerson
 {
@@ -139,6 +154,8 @@ public sealed class AutoCompletePerson
     public AutoCompleteValue Photo { get; } = new ("photo");
 }
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 [EditorBrowsable(EditorBrowsableState.Never)]
 public sealed class AutoCompletePhone
 {
@@ -155,6 +172,8 @@ public sealed class AutoCompletePhone
     public AutoCompleteValue NationalNumber { get; } = new ("tel-national");
 }
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 [EditorBrowsable(EditorBrowsableState.Never)]
 public sealed class AutoCompleteWeb
 {

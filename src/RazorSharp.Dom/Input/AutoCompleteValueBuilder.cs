@@ -1,5 +1,6 @@
 namespace RazorSharp.Dom.Input;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -7,6 +8,8 @@ using System.Text;
 using RazorSharp.Core.Contracts;
 using RazorSharp.Core.Runtime.CompilerServices;
 
+[SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public sealed class AutoCompleteValueBuilder
 {
     private readonly StringBuilder _sb;
