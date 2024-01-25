@@ -8,6 +8,7 @@ using Microsoft.JSInterop.Infrastructure;
 using RazorSharp.Core.Contracts;
 using RazorSharp.Core.Diagnostics;
 
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
 public sealed class JSModuleReference : IJSObjectReference
 {

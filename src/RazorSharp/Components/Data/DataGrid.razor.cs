@@ -24,6 +24,7 @@ public sealed partial class DataGrid<TItem> : WebComponent
 
     public GridComponentRegistry Registry { get; } = new ();
 
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public async ValueTask RefreshAsync()
     {
         if (OnRefresh is not null)
