@@ -5,7 +5,7 @@ public sealed class EventDebouncer<T> : IDebounceable<T>, IAsyncDisposable
 {
     private CancellationTokenSource? _cts;
 
-    public async ValueTask DebounceAsync(Func<T, Task> func, T argument, int interval)
+    public async ValueTask DebounceAsync(Func<T, Task> func, T arg, int interval)
     {
         if (_cts is not null)
         {
@@ -18,7 +18,7 @@ public sealed class EventDebouncer<T> : IDebounceable<T>, IAsyncDisposable
                   .ContinueWith(async t => {
                       if (t.IsCompletedSuccessfully)
                       {
-                          await func(argument);
+                          await func(arg);
                           await DisposeAsync();
                       }
                   });
