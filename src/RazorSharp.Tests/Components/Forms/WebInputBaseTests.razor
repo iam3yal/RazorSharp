@@ -16,12 +16,12 @@
 
         TestableWebInput<string> webInputRef = null!;
 
-        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
-                                            <TestableWebInput
-                                                @ref="webInputRef"
-                                                class="my-class other-class"
-                                                ValueExpression="() => model.StringProperty" />
-                                        </FakeFormHost>);
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new (model))">
+            <TestableWebInput
+                @ref="webInputRef"
+                class="my-class other-class"
+                ValueExpression="() => model.StringProperty" />
+        </FakeFormHost>);
 
         var oldCssClass = webInputRef.MergedClass;
 
@@ -42,12 +42,12 @@
 
         TestableWebInput<string> webInputRef = null!;
 
-        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
-                                            <TestableWebInput
-                                                @ref="webInputRef"
-                                                Value="@("foo")"
-                                                ValueExpression="() => model.StringProperty" />
-                                        </FakeFormHost>);
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new (model))">
+            <TestableWebInput
+                @ref="webInputRef"
+                Value="@("foo")"
+                ValueExpression="() => model.StringProperty" />
+        </FakeFormHost>);
 
         Assert.Same(host.Instance.EditContext, webInputRef.EditContext);
     }
@@ -59,12 +59,12 @@
 
         TestableWebInput<string> webInputRef = null!;
 
-        Render(@<FakeFormHost EditContext="@(new(model))">
-                   <TestableWebInput
-                       @ref="webInputRef"
-                       Value="@("foo")"
-                       ValueExpression="() => model.StringProperty" />
-               </FakeFormHost>);
+        Render(@<FakeFormHost EditContext="@(new (model))">
+            <TestableWebInput
+                @ref="webInputRef"
+                Value="@("foo")"
+                ValueExpression="() => model.StringProperty" />
+        </FakeFormHost>);
 
         var fieldIdentifier = FieldIdentifier.Create(() => model.StringProperty);
 
@@ -212,7 +212,7 @@
 
         var wasValueChangedFiredAfterFirstRender = value != "foo";
 
-        await textInputElement.ChangeAsync(new() { Value = "bar" });
+        await textInputElement.ChangeAsync(new () { Value = "bar" });
 
         Assert.Multiple(() => Assert.False(wasValueChangedFiredAfterFirstRender),
                         () => Assert.Equal("bar", webInput.Instance.Value));
@@ -225,12 +225,12 @@
 
         TestableDateInput dateInputRef = null!;
 
-        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
-                                            <TestableDateInput
-                                                @ref="dateInputRef"
-                                                ValueChanged="@(newValue => model.DateProperty = newValue)"
-                                                ValueExpression="() => model.DateProperty" />
-                                        </FakeFormHost>);
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new (model))">
+            <TestableDateInput
+                @ref="dateInputRef"
+                ValueChanged="@(newValue => model.DateProperty = newValue)"
+                ValueExpression="() => model.DateProperty" />
+        </FakeFormHost>);
 
         var dateInputElement = host.Find("input");
 
@@ -258,12 +258,12 @@
 
         TestableDateInput dateInputRef = null!;
 
-        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
-                                            <TestableDateInput
-                                                @ref="dateInputRef"
-                                                ValueChanged="@(newValue => model.DateProperty = newValue)"
-                                                ValueExpression="() => model.DateProperty" />
-                                        </FakeFormHost>);
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new (model))">
+            <TestableDateInput
+                @ref="dateInputRef"
+                ValueChanged="@(newValue => model.DateProperty = newValue)"
+                ValueExpression="() => model.DateProperty" />
+        </FakeFormHost>);
 
         var dateInputElement = host.Find("input");
 
@@ -283,8 +283,8 @@
         await dateInputElement.ChangeAsync(new ChangeEventArgs { Value = "1991/11/20" });
 
         Assert.Multiple(TransitionToInvalid()
-                            .Concat(TransitionToValid())
-                            .ToArray());
+                        .Concat(TransitionToValid())
+                        .ToArray());
 
         IEnumerable<Action> TransitionToInvalid()
         {
@@ -333,11 +333,11 @@
 
         TestableWebInput<string> webInputRef = null!;
 
-        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
-                                            <TestableWebInput
-                                                @ref="webInputRef"
-                                                ValueExpression="() => model.StringProperty" />
-                                        </FakeFormHost>);
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new (model))">
+            <TestableWebInput
+                @ref="webInputRef"
+                ValueExpression="() => model.StringProperty" />
+        </FakeFormHost>);
 
         var fieldIdentifier = FieldIdentifier.Create(() => model.StringProperty);
 
@@ -388,13 +388,13 @@
         var value = "foo";
         var wasValueChangedFired = false;
 
-        var host = Render(@<FakeFormHost EditContext="@(new(model))">
-                              <TestableWebInput
-                                  TValue="string"
-                                  Value="value"
-                                  ValueChanged="@(_ => wasValueChangedFired = true)"
-                                  ValueExpression="() => model.StringProperty" />
-                          </FakeFormHost>);
+        var host = Render(@<FakeFormHost EditContext="@(new (model))">
+            <TestableWebInput
+                TValue="string"
+                Value="value"
+                ValueChanged="@(_ => wasValueChangedFired = true)"
+                ValueExpression="() => model.StringProperty" />
+        </FakeFormHost>);
 
         var textInputElement = host.Find("input");
 
@@ -436,14 +436,14 @@
 
         TestableWebInput<string> webInputRef = null!;
 
-        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
-                                            <TestableWebInput
-                                                TValue="string"
-                                                @ref="webInputRef"
-                                                Value="@("foo")"
-                                                ValueChanged="_ => { }"
-                                                ValueExpression="() => model.StringProperty" />
-                                        </FakeFormHost>);
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new (model))">
+            <TestableWebInput
+                TValue="string"
+                @ref="webInputRef"
+                Value="@("foo")"
+                ValueChanged="_ => { }"
+                ValueExpression="() => model.StringProperty" />
+        </FakeFormHost>);
 
         var textInputElement = host.Find("input");
 
@@ -550,11 +550,11 @@
         TestableWebInput<string> webInputRef = null!;
 
         Render<FakeFormHost>(@<FakeFormHost>
-                                 <TestableWebInput
-                                     @ref="webInputRef"
-                                     Value="value"
-                                     ValueExpression="() => value" />
-                             </FakeFormHost>);
+            <TestableWebInput
+                @ref="webInputRef"
+                Value="value"
+                ValueExpression="() => value" />
+        </FakeFormHost>);
 
         Assert.Null(webInputRef.EditContext);
     }
@@ -568,13 +568,13 @@
         TestableWebInput<string> webInputRef = null!;
 
         var host = Render<FakeFormHost>(@<FakeFormHost>
-                                            <TestableWebInput
-                                                TValue="string"
-                                                @ref="webInputRef"
-                                                Value="value"
-                                                ValueChanged="newValue => value = newValue"
-                                                ValueExpression="() => value" />
-                                        </FakeFormHost>);
+            <TestableWebInput
+                TValue="string"
+                @ref="webInputRef"
+                Value="value"
+                ValueChanged="newValue => value = newValue"
+                ValueExpression="() => value" />
+        </FakeFormHost>);
 
         var oldValue = value;
 
@@ -592,11 +592,11 @@
 
         TestableWebInput<string> webInputRef = null!;
 
-        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
-                                            <TestableWebInput
-                                                @ref="webInputRef"
-                                                ValueExpression="() => model.StringProperty" />
-                                        </FakeFormHost>);
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new (model))">
+            <TestableWebInput
+                @ref="webInputRef"
+                ValueExpression="() => model.StringProperty" />
+        </FakeFormHost>);
 
         var fieldIdentifier = FieldIdentifier.Create(() => model.StringProperty);
 
@@ -615,14 +615,14 @@
 
         TestableWebInput<string> webInputRef = null!;
 
-        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
-                                            <TestableWebInput
-                                                @ref="webInputRef"
-                                                ValueExpression="() => model.StringProperty" />
-                                        </FakeFormHost>);
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new (model))">
+            <TestableWebInput
+                @ref="webInputRef"
+                ValueExpression="() => model.StringProperty" />
+        </FakeFormHost>);
 
         var ex = Record.Exception(() => {
-            host.Instance.EditContext = new(model);
+            host.Instance.EditContext = new (model);
             host.Render();
         });
 
@@ -638,9 +638,9 @@
         var ex = Record.Exception(() => {
             var model = new FakeModel();
 
-            Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
-                                     <TestableWebInput TValue="string" />
-                                 </FakeFormHost>);
+            Render<FakeFormHost>(@<FakeFormHost EditContext="@(new (model))">
+                <TestableWebInput TValue="string" />
+            </FakeFormHost>);
         });
 
         Assert.Multiple(() => Assert.NotNull(ex),
@@ -656,11 +656,11 @@
 
         TestableWebInput<string> webInputRef = null!;
 
-        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new(model))">
-                                            <TestableWebInput
-                                                @ref="webInputRef"
-                                                ValueExpression="() => model.StringProperty" />
-                                        </FakeFormHost>);
+        var host = Render<FakeFormHost>(@<FakeFormHost EditContext="@(new (model))">
+            <TestableWebInput
+                @ref="webInputRef"
+                ValueExpression="() => model.StringProperty" />
+        </FakeFormHost>);
 
         var fieldIdentifier = FieldIdentifier.Create(() => model.StringProperty);
 

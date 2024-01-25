@@ -69,7 +69,7 @@ public static class RenderedComponentExtensions
 
             if (methodName is null)
             {
-                throw new InvalidOperationException($"No event handler method was matched.");
+                throw new InvalidOperationException("No event handler method was matched.");
             }
 
             if (eventArgType is null)
