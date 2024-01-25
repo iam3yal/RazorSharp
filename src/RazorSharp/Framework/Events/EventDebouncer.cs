@@ -7,7 +7,11 @@ public sealed class EventDebouncer<T> : IDebounceable<T>, IAsyncDisposable
 
     public async ValueTask DebounceAsync(Func<T, Task> func, T argument, int interval)
     {
-        _cts?.Cancel();
+        if (_cts is not null)
+        {
+            await _cts.CancelAsync();
+        }
+
         _cts = new CancellationTokenSource();
 
         await Task.Delay(interval, _cts.Token)
