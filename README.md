@@ -1,4 +1,4 @@
-![Logo](assets/RazorSharp.png)
+![Logo](assets/Logo.png)
 
 RazorSharp is a Razor Class Library that aims to provide enterprise-class UI components for Blazor.
 
