@@ -2,7 +2,7 @@
 
 Welcome to the RazorSharp project! This directory contains the source code for the RazorSharp library.
 
-![RazorSharp Diagram](../assets/RazorSharp-Diagram.png)
+![RazorSharp Diagram](../assets/Diagram.png)
 
 ## Core Class Library
 
